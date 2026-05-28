@@ -1,387 +1,457 @@
 <!DOCTYPE html>
 <html lang="te">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dwaraka Collections</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dwaraka Collections</title>
+    <style>
+        /* CSS Reset & Variables */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<link rel="stylesheet"
-href="file_0000000019b07208b24bcdfb699c657c.png">
+        :root {
+            --brand-dark: #4A2E2B; /* స్క్రీన్‌షాట్‌లో ఉన్న లగ్జరీ డార్క్ బ్రౌన్ */
+            --bg-light: #FFFFFF;
+            --card-bg: #F5F5F5;
+            --text-main: #333333;
+            --text-light: #666666;
+            --accent-gold: #FFD700;
+        }
 
-<style>
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
-}
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-body{
-background:#fff;
-color:#222;
-}
+        /* ==========================================
+           HEADER SECTION (Fix: Fixed background & layout)
+        ========================================== */
+        header {
+            background-color: var(--brand-dark);
+            color: white;
+            padding: 25px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* ఫారమ్ దీని కిందకి వెళ్లకుండా నియంత్రిస్తుంది */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
 
-/* HEADER */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
 
-header{
-background:#4A2C2A;
-color:white;
-padding:15px;
-position:sticky;
-top:0;
-z-index:999;
-}
+        .brand-info h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
 
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+        .brand-stats {
+            font-size: 13px;
+            opacity: 0.8;
+        }
 
-.menu{
-font-size:28px;
-cursor:pointer;
-}
+        .brand-stats span {
+            margin-right: 15px;
+        }
 
-.banner{
-height:250px;
-background:url("banner.jpg") center/cover;
-margin-top:10px;
-border-radius:10px;
-}
+        /* Menu Button & Dropdown */
+        .menu-wrapper {
+            position: relative;
+        }
 
-.stats{
-display:flex;
-gap:20px;
-margin-top:10px;
-}
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 5px;
+            transition: opacity 0.2s;
+        }
 
-.stats div{
-font-size:15px;
-}
+        .menu-btn:hover {
+            opacity: 0.8;
+        }
 
-/* ABOUT */
+        .dropdown-menu {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            width: 180px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
 
-.about{
-padding:30px;
-text-align:center;
-}
+        .dropdown-menu button {
+            background: none;
+            border: none;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 14px;
+            cursor: pointer;
+            color: #333;
+            width: 100%;
+            transition: background 0.2s;
+        }
 
-.about h2{
-color:#4A2C2A;
-margin-bottom:10px;
-}
+        .dropdown-menu button:hover {
+            background-color: #f5f5f5;
+            color: var(--brand-dark);
+            font-weight: 600;
+        }
 
-.order-btn{
-background:#4A2C2A;
-color:white;
-padding:14px 30px;
-border:none;
-border-radius:8px;
-font-size:18px;
-cursor:pointer;
-margin-top:20px;
-}
+        /* ==========================================
+           MAIN CONTENT
+        ========================================== */
+        main {
+            padding: 40px 0;
+        }
 
-/* FORM */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
 
-.popup{
-display:none;
-position:fixed;
-left:0;
-top:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.7);
-overflow:auto;
-}
+        .welcome-section h2 {
+            font-size: 22px;
+            color: #222;
+            margin-bottom: 10px;
+        }
 
-.form-box{
-background:white;
-width:90%;
-max-width:500px;
-padding:20px;
-margin:30px auto;
-border-radius:10px;
-}
+        .welcome-section p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
 
-input,textarea{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:1px solid #ccc;
-border-radius:6px;
-}
+        .order-trigger-btn {
+            background-color: var(--brand-dark);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
 
-.submit{
-background:#4A2C2A;
-color:white;
-border:none;
-padding:12px;
-width:100%;
-cursor:pointer;
-}
+        .order-trigger-btn:hover {
+            background-color: #3d2523;
+            transform: translateY(-1px);
+        }
 
-/* PROCESS */
+        /* ==========================================
+           ROADMAP PROCESS LAYOUT (New visual style)
+        ========================================== */
+        .process-title {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: #222;
+        }
 
-.process{
-padding:30px;
-}
+        .roadmap {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
 
-.step{
-background:#f3f3f3;
-padding:20px;
-margin:10px;
-border-radius:10px;
-}
+        /* రోడ్‌మ్యాప్ మధ్యలో వచ్చే వర్టికల్ లైన్ */
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 15px;
+            bottom: 15px;
+            width: 2px;
+            background-color: #E0E0E0;
+        }
 
-/* ADS */
+        .roadmap-step {
+            position: relative;
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #444;
+            transition: transform 0.2s;
+        }
 
-.ads{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#4A2C2A;
-color:white;
-padding:15px;
-border-radius:10px;
-width:220px;
-}
+        .roadmap-step:hover {
+            transform: translateX(5px);
+        }
 
-.close{
-float:right;
-cursor:pointer;
-}
+        /* రోడ్‌మ్యాప్ డాట్స్ (Circles) */
+        .roadmap-step::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 22px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--brand-dark);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--brand-dark);
+        }
 
-/* FOOTER */
+        /* ==========================================
+           MODAL / POPUP FORM (Fix: High z-index & center)
+        ========================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000; /* హెడర్ కంటే పైకి రావడానికి */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
 
-footer{
-background:#4A2C2A;
-color:white;
-padding:30px;
-margin-top:40px;
-text-align:center;
-}
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-@media(max-width:700px){
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            padding: 30px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
 
-.stats{
-flex-direction:column;
-}
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
 
-}
+        .modal-header {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--brand-dark);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--brand-dark);
+            padding-bottom: 8px;
+        }
 
-</style>
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-popup:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #CCC;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--brand-dark);
+            box-shadow: 0 0 5px rgba(74,46,43,0.2);
+        }
+
+        .submit-btn {
+            background-color: var(--brand-dark);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--brand-dark);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+            font-size: 13px;
+        }
+
+        footer p {
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-
-<div class="top">
-
-<h2>Dwaraka Collections</h2>
-
-<div class="menu">
-☰
-</div>
-
-</div>
-
-<div class="stats">
-
-<div>
-<i class="fa-brands fa-instagram"></i>
-12.5K Followers
-</div>
-
-<div>
-<i class="fa-solid fa-users"></i>
-3200 Customers
-</div>
-
-</div>
-
-<div class="banner"></div>
-
-</header>
-
-
-<section class="about">
-
-<h2>Welcome To Dwaraka Collections</h2>
-
-<p>
-
-Quality products with trusted service.
-Fast delivery and customer support.
-
-</p>
-
-<button class="order-btn"
-onclick="openForm()">
-
-ORDER NOW
-
-</button>
-
-</section>
-
-
-<section class="process">
-
-<h2>Process Of Order</h2>
-
-<div class="step">1. Select Product</div>
-
-<div class="step">2. Upload Screenshot</div>
-
-<div class="step">3. Fill Address</div>
-
-<div class="step">4. Submit Order</div>
-
-<div class="step">5. Delivery</div>
-
-</section>
-
-
-
-<div class="popup" id="form">
-
-<div class="form-box">
-
-<h2>Order Form</h2>
-
-<input placeholder="Name">
-
-<input placeholder="Phone Number">
-
-<input type="file">
-
-<input placeholder="Door No">
-
-<input placeholder="Street">
-
-<input placeholder="Village / City">
-
-<input placeholder="District">
-
-<input placeholder="Landmark">
-
-<input placeholder="Pincode">
-
-<input placeholder="State">
-
-<textarea placeholder="Optional Message"></textarea>
-
-<button class="submit"
-onclick="submitOrder()">
-
-Submit Order
-
-</button>
-
-</div>
-
-</div>
-
-
-
-<div class="ads" id="ad">
-
-<span class="close"
-onclick="closeAd()">
-
-✖
-
-</span>
-
-<p>
-
-Follow Instagram For New Offers 🔥
-
-</p>
-
-</div>
-
-
-<footer>
-
-<h3>Dwaraka Collections</h3>
-
-<p>
-
-Trusted Shopping Destination
-
-</p>
-
-<p>
-
-© 2026 All Rights Reserved
-
-</p>
-
-</footer>
-
-
-<script>
-
-function openForm(){
-
-document.getElementById(
-"form"
-).style.display="block";
-
-}
-
-function submitOrder(){
-
-alert(
-"Order Submitted Successfully"
-);
-
-window.open(
-
-"https://wa.me/919999999999?text=New Order",
-
-"_blank"
-
-);
-
-feedback();
-
-}
-
-function feedback(){
-
-let star=prompt(
-
-"Rate Us 1-5"
-
-);
-
-alert(
-
-"Thank You For Rating : "+star
-
-);
-
-document.getElementById(
-"form"
-).style.display="none";
-
-}
-
-function closeAd(){
-
-document.getElementById(
-"ad"
-).style.display="none";
-
-}
-
-</script>
-
+    <header>
+        <div class="container nav-container">
+            <div class="brand-info">
+                <h1>Dwaraka Collections</h1>
+                <div class="brand-stats">
+                    <span>12.5K Followers</span>
+                    <span>3200 Customers</span>
+                </div>
+            </div>
+            <div class="menu-wrapper">
+                <button class="menu-btn" onclick="toggleDropdown(event)">☰</button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <button onclick="handleMenuClick('About Us')">About</button>
+                    <button onclick="handleMenuClick('Contact Details')">Contact</button>
+                    <button onclick="triggerAdminLogin()">Login 🔑</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="welcome-section">
+            <h2>Welcome To Dwaraka Collections</h2>
+            <p>Quality products with trusted service. Fast delivery and customer support.</p>
+            <button class="order-trigger-btn" onclick="openOrderModal()">Order Now</button>
+        </section>
+
+        <section>
+            <h3 class="process-title">Process Of Order</h3>
+            <div class="roadmap">
+                <div class="roadmap-step">1. Select Product</div>
+                <div class="roadmap-step">2. Upload Screenshot</div>
+                <div class="roadmap-step">3. Fill Address</div>
+                <div class="roadmap-step">4. Submit Order</div>
+                <div class="roadmap-step">5. Delivery</div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <span class="close-popup" onclick="closeOrderModal()">&times;</span>
+            <div class="modal-header">కొత్త ఆర్డర్ ఫారమ్</div>
+            <form onsubmit="handleOrderSubmit(event)">
+                <div class="form-group">
+                    <label>పూర్తి పేరు (Full Name) *</label>
+                    <input type="text" required placeholder="మీ పేరు రాయండి">
+                </div>
+                <div class="form-group">
+                    <label>వాట్సాప్ నెంబర్ (WhatsApp Number) *</label>
+                    <input type="tel" required placeholder="91XXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label>స్క్రీన్‌షాట్ అప్‌లోడ్ (Upload Screenshot) *</label>
+                    <input type="file" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label>పూర్తి అడ్రస్ (Full Address) *</label>
+                    <textarea rows="3" required placeholder="మీ ఇంటి అడ్రస్ ఇక్కడ రాయండి..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">ఆర్డర్ సబ్మిట్ చేయండి</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Dwaraka Collections</strong></p>
+        <p>Trusted Shopping Destination</p>
+        <p>&copy; 2026 All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // డ్రాప్‌డౌన్ టోగుల్ చేయడం
+        function toggleDropdown(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('dropdownMenu');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        // మెనూ ఆప్షన్లపై క్లిక్ చేసినప్పుడు
+        function handleMenuClick(page) {
+            alert(page + " వివరాలు త్వరలో అప్‌డేట్ చేయబడతాయి.");
+        }
+
+        // అడ్మిన్ లాగిన్ ప్రాంప్ట్
+        function triggerAdminLogin() {
+            const password = prompt("అడ్మిన్ పాస్‌వర్డ్ ఎంటర్ చేయండి:");
+            if (password === "admin123") {
+                alert("లాగిన్ విజయవంతమైంది! (Dashboard Access Granted)");
+            } else if (password !== null) {
+                alert("తప్పుడు పాస్‌వర్డ్!");
+            }
+        }
+
+        // ఆర్డర్ మోడల్ ఓపెన్/క్లోజ్
+        function openOrderModal() {
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
+
+        // ఫారమ్ సబ్మిషన్
+        function handleOrderSubmit(event) {
+            event.preventDefault();
+            alert("మీ ఆర్డర్ విజయవంతంగా నమోదైంది!");
+            closeOrderModal();
+        }
+
+        // విండోపై ఎక్కడ క్లిక్ చేసినా డ్రాప్‌డౌన్ క్లోజ్ అవ్వడం కోసం
+        window.onclick = function() {
+            document.getElementById('dropdownMenu').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
