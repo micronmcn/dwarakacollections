@@ -543,7 +543,6 @@
 </head>
 <body>
 
-    <!-- App Web Header -->
     <header>
         <div class="container nav-container">
             <div class="logo">మన ఆన్‌లైన్ బిజినెస్</div>
@@ -551,7 +550,6 @@
                 <button class="menu-btn" onclick="toggleDropdown()">☰ Menu</button>
                 <button class="logout-btn hidden" id="logoutBtn" onclick="logoutAdmin()">Logout</button>
                 
-                <!-- Dropdown Menu Options -->
                 <div class="dropdown-menu" id="dropdownMenu">
                     <button onclick="alert('హోమ్ పేజీలోనే ఉన్నారు')">Home</button>
                     <button onclick="alert('ప్రొడక్ట్స్ లిస్ట్ త్వరలో వస్తుంది')">Products</button>
@@ -563,9 +561,6 @@
         </div>
     </header>
 
-    <!-- ========================================================
-         CUSTOMER VIEW
-         ======================================================== -->
     <main class="container view-section" id="customerView">
         <div class="print-btn-container">
             <button class="print-btn" onclick="window.print()">🖨️ పేజీ ప్రింట్ తీసుకోండి</button>
@@ -599,9 +594,6 @@
         </div>
     </main>
 
-    <!-- ========================================================
-         ADMIN VIEW (LOCKED BEHIND LOGIN)
-         ======================================================== -->
     <main class="container view-section hidden" id="adminView">
         <div class="admin-header">
             <h2>అడ్మిన్ మేనేజ్‌మెంట్ డ్యాష్‌బోర్డ్</h2>
@@ -635,13 +627,11 @@
             </div>
         </div>
 
-        <!-- TAB CONTENT 1: INBOX -->
         <div id="adminInboxSection">
             <h3>📥 కొత్త ఆర్డర్ల మెసేజ్ లిస్ట్ (Inbox)</h3>
             <div id="inboxMessageList" style="margin-top: 15px;"></div>
         </div>
 
-        <!-- TAB CONTENT 2: RUPEE -->
         <div id="adminRupeeSection" class="hidden">
             <h3>💰 ఆదాయం మరియు పూర్తి వివరాలు (Income Details)</h3>
             <div class="table-responsive">
@@ -660,15 +650,23 @@
             </div>
         </div>
 
-        <!-- TAB CONTENT 3: ARCHIVED -->
         <div id="adminArchiveSection" class="hidden">
             <h3>📁 పూర్తి చేసిన / మినిమైజ్ చేసిన మెసేజ్‌లు (Archived)</h3>
             <div id="archiveMessageList" style="margin-top: 15px;"></div>
         </div>
     </main>
 
-    <!-- ========================================================
-         ORDER POPUP / MODAL
-         ======================================================== -->
     <div class="modal-overlay hidden" id="orderModal">
-        <div
+        <div class="modal-content">
+            <span class="close-popup" onclick="closeOrderModal()">&times;</span>
+            
+            <div id="modalFormView">
+                <div class="modal-header">కొత్త ఆర్డర్ ఫారమ్</div>
+                <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+                    <div class="form-group">
+                        <label>పూర్తి పేరు (Full Name) *</label>
+                        <input type="text" id="custName" required placeholder="మీ పేరు రాయండి">
+                    </div>
+                    <div class="form-group">
+                        <label>వాట్సాప్ నెంబర్ (WhatsApp Number) *</label>
+                        <input type="tel" id=
