@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dwaraka Collections</title>
     <style>
-        /* CSS Reset & Variables */
+        /* CSS Reset & Variable Definitions */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,213 +14,234 @@
         }
 
         :root {
-            --brand-dark: #4A2E2B; /* స్క్రీన్‌షాట్‌లో ఉన్న లగ్జరీ డార్క్ బ్రౌన్ */
-            --bg-light: #FFFFFF;
-            --card-bg: #F5F5F5;
-            --text-main: #333333;
-            --text-light: #666666;
-            --accent-gold: #FFD700;
+            --bg-color: #FFFFFF;
+            --dark-brown: #4A2E1B;
+            --light-brown: #5D3A22;
+            --soft-cream: #FDFBF7;
+            --text-dark: #333333;
+            --border-color: #D1C7BD;
+            --success-color: #2E7D32;
+            --danger-color: #C62828;
+            --road-bg: #F5F5F5;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-main);
+            background-color: var(--bg-color);
+            color: var(--text-dark);
             line-height: 1.6;
         }
 
         .container {
             width: 90%;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* ==========================================
-           HEADER SECTION (Fix: Fixed background & layout)
-        ========================================== */
+        /* Header with Background Image */
         header {
-            background-color: var(--brand-dark);
-            color: white;
-            padding: 25px 0;
+            background: linear-gradient(rgba(74, 46, 27, 0.6), rgba(74, 46, 27, 0.85)), 
+                        url('file_0000000019b07208b24bcdfb699c657c.png') no-repeat center center;
+            background-size: cover;
+            min-height: 180px;
+            padding: 20px 0;
             position: sticky;
             top: 0;
-            z-index: 1000; /* ఫారమ్ దీని కిందకి వెళ్లకుండా నియంత్రిస్తుంది */
+            z-index: 100;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            color: white;
+            display: flex;
+            align-items: center;
         }
 
         .nav-container {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
+            width: 100%;
         }
 
-        .brand-info h1 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
+        .logo-area .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
         }
 
-        .brand-stats {
+        .logo-area .stats-sub {
             font-size: 13px;
-            opacity: 0.8;
+            margin-top: 5px;
+            opacity: 0.9;
+            word-spacing: 10px;
         }
 
-        .brand-stats span {
-            margin-right: 15px;
-        }
-
-        /* Menu Button & Dropdown */
-        .menu-wrapper {
+        .nav-btns {
+            display: flex;
+            gap: 10px;
             position: relative;
         }
 
-        .menu-btn {
-            background: none;
-            border: none;
+        .menu-btn, .logout-btn {
+            background-color: rgba(255, 255, 255, 0.2);
             color: white;
-            font-size: 28px;
+            border: 1px solid white;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: bold;
             cursor: pointer;
-            padding: 5px;
-            transition: opacity 0.2s;
+            border-radius: 4px;
+            transition: all 0.3s;
         }
 
         .menu-btn:hover {
-            opacity: 0.8;
+            background-color: white;
+            color: var(--dark-brown);
         }
 
+        .logout-btn {
+            background-color: var(--danger-color);
+            border: none;
+        }
+        .logout-btn:hover {
+            background-color: #b71c1c;
+        }
+
+        /* Dropdown Menu Fix */
         .dropdown-menu {
             position: absolute;
-            top: 45px;
+            top: 50px;
             right: 0;
             background-color: white;
-            border-radius: 6px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             width: 180px;
             display: none;
             flex-direction: column;
+            z-index: 200;
             overflow: hidden;
-            border: 1px solid #eee;
         }
 
         .dropdown-menu button {
             background: none;
             border: none;
-            padding: 12px 16px;
+            padding: 12px 15px;
             text-align: left;
             font-size: 14px;
             cursor: pointer;
-            color: #333;
-            width: 100%;
+            color: var(--text-dark);
             transition: background 0.2s;
         }
 
         .dropdown-menu button:hover {
-            background-color: #f5f5f5;
-            color: var(--brand-dark);
-            font-weight: 600;
+            background-color: var(--soft-cream);
+            color: var(--dark-brown);
+            font-weight: bold;
         }
 
-        /* ==========================================
-           MAIN CONTENT
-        ========================================== */
-        main {
+        .view-section {
             padding: 40px 0;
         }
 
-        .welcome-section {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .welcome-section h2 {
-            font-size: 22px;
-            color: #222;
-            margin-bottom: 10px;
-        }
-
-        .welcome-section p {
-            color: var(--text-light);
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .order-trigger-btn {
-            background-color: var(--brand-dark);
-            color: white;
-            border: none;
-            padding: 12px 35px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .order-trigger-btn:hover {
-            background-color: #3d2523;
-            transform: translateY(-1px);
+        .hidden {
+            display: none !important;
         }
 
         /* ==========================================
-           ROADMAP PROCESS LAYOUT (New visual style)
+           CUSTOMER VIEW STYLES
         ========================================== */
-        .process-title {
-            font-size: 20px;
-            margin-bottom: 25px;
-            color: #222;
-        }
-
-        .roadmap {
-            position: relative;
-            padding-left: 30px;
+        .brand-section {
+            text-align: center;
+            margin-bottom: 50px;
             margin-top: 20px;
         }
 
-        /* రోడ్‌మ్యాప్ మధ్యలో వచ్చే వర్టికల్ లైన్ */
-        .roadmap::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 15px;
-            bottom: 15px;
-            width: 2px;
-            background-color: #E0E0E0;
+        .brand-section h1 {
+            color: var(--dark-brown);
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .brand-section p {
+            font-size: 16px;
+            color: #555;
+            max-width: 650px;
+            margin: 0 auto 25px auto;
+        }
+
+        .order-trigger-btn {
+            background-color: var(--dark-brown);
+            color: white;
+            border: none;
+            padding: 15px 45px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(74, 46, 27, 0.3);
+            transition: all 0.3s;
+        }
+
+        .order-trigger-btn:hover {
+            background-color: var(--light-brown);
+            transform: translateY(-2px);
+        }
+
+        /* Roadmap UI Design */
+        .roadmap-container {
+            margin-top: 50px;
+            padding: 20px 0;
+        }
+
+        .roadmap-title {
+            text-align: center;
+            color: var(--dark-brown);
+            font-size: 24px;
+            margin-bottom: 35px;
+        }
+
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
         }
 
         .roadmap-step {
-            position: relative;
-            background-color: var(--card-bg);
-            padding: 15px 20px;
+            background-color: var(--road-bg);
+            padding: 18px 25px;
             border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 15px;
-            font-weight: 500;
-            color: #444;
-            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-left: 5px solid var(--dark-brown);
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         }
 
-        .roadmap-step:hover {
-            transform: translateX(5px);
-        }
-
-        /* రోడ్‌మ్యాప్ డాట్స్ (Circles) */
-        .roadmap-step::before {
-            content: '';
-            position: absolute;
-            left: -27px;
-            top: 22px;
-            width: 10px;
-            height: 10px;
+        .roadmap-num {
+            background-color: var(--dark-brown);
+            color: white;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 50%;
-            background-color: var(--brand-dark);
-            border: 2px solid white;
-            box-shadow: 0 0 0 2px var(--brand-dark);
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .roadmap-text {
+            font-size: 16px;
+            color: var(--text-dark);
+            font-weight: 500;
         }
 
         /* ==========================================
-           MODAL / POPUP FORM (Fix: High z-index & center)
+           MODAL / POPUP OVERLAY FIX
         ========================================== */
         .modal-overlay {
             position: fixed;
@@ -228,62 +249,38 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0,0,0,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 2000; /* హెడర్ కంటే పైకి రావడానికి */
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+            z-index: 1001; /* Header కన్నా పైన ఉండేలా ఫిక్స్ చేసాము */
+            padding: 15px;
         }
 
         .modal-content {
             background-color: white;
-            width: 90%;
-            max-width: 500px;
+            width: 100%;
+            max-width: 480px;
             border-radius: 8px;
-            padding: 30px;
+            border-top: 6px solid var(--dark-brown);
+            padding: 25px;
             position: relative;
-            max-height: 85vh;
+            max-height: 90vh;
             overflow-y: auto;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .modal-header {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            color: var(--brand-dark);
+            color: var(--dark-brown);
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--brand-dark);
-            padding-bottom: 8px;
-        }
-
-        .close-popup {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .close-popup:hover {
-            color: #333;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
@@ -291,48 +288,190 @@
             margin-bottom: 6px;
             font-weight: 600;
             font-size: 14px;
+            color: #444;
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #CCC;
+            padding: 11px;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             font-size: 14px;
         }
 
         .form-group input:focus, .form-group textarea:focus {
             outline: none;
-            border-color: var(--brand-dark);
-            box-shadow: 0 0 5px rgba(74,46,43,0.2);
+            border-color: var(--dark-brown);
         }
 
         .submit-btn {
-            background-color: var(--brand-dark);
+            background-color: var(--dark-brown);
             color: white;
             border: none;
             width: 100%;
-            padding: 12px;
+            padding: 13px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             border-radius: 4px;
             margin-top: 10px;
+            transition: background 0.2s;
         }
 
-        /* Footer */
+        .submit-btn:hover {
+            background-color: var(--light-brown);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #888;
+            line-height: 1;
+        }
+
+        .close-popup:hover {
+            color: #000;
+        }
+
+        /* Stars View */
+        .success-view {
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .success-icon {
+            color: var(--success-color);
+            font-size: 52px;
+            margin-bottom: 12px;
+        }
+
+        .stars-container {
+            font-size: 34px;
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .star {
+            color: #ccc;
+            transition: color 0.2s;
+        }
+
+        .star:hover, .star.selected {
+            color: #FFD700;
+        }
+
+        /* ==========================================
+           ADMIN DASHBOARD VIEW
+        ========================================== */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .admin-nav-tabs {
+            display: flex;
+            gap: 12px;
+        }
+
+        .admin-tab-btn {
+            background: none;
+            border: 1px solid var(--dark-brown);
+            color: var(--dark-brown);
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .admin-tab-btn.active {
+            background-color: var(--dark-brown);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--soft-cream);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            border-top: 4px solid var(--dark-brown);
+        }
+
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--dark-brown);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: var(--soft-cream);
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .badge-pending { background-color: #FFF3CD; color: #856404; }
+        .badge-completed { background-color: #D4EDDA; color: #155724; }
+
+        .order-msg-item {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            background-color: white;
+        }
+
+        .action-btn {
+            background-color: var(--dark-brown);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         footer {
-            background-color: var(--brand-dark);
+            background-color: var(--dark-brown);
             color: white;
             text-align: center;
-            padding: 30px 0;
+            padding: 25px 0;
             margin-top: 60px;
-            font-size: 13px;
-        }
-
-        footer p {
-            margin-bottom: 4px;
-            opacity: 0.9;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -340,118 +479,165 @@
 
     <header>
         <div class="container nav-container">
-            <div class="brand-info">
-                <h1>Dwaraka Collections</h1>
-                <div class="brand-stats">
-                    <span>12.5K Followers</span>
-                    <span>3200 Customers</span>
-                </div>
+            <div class="logo-area">
+                <div class="logo">Dwaraka Collections</div>
+                <div class="stats-sub">12.5K_Followers 3200_Customers</div>
             </div>
-            <div class="menu-wrapper">
-                <button class="menu-btn" onclick="toggleDropdown(event)">☰</button>
+            <div class="nav-btns">
+                <button class="menu-btn" onclick="toggleDropdown(event)">☰ Menu</button>
+                <button class="logout-btn hidden" id="logoutBtn" onclick="logoutAdmin()">Logout</button>
+                
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <button onclick="handleMenuClick('About Us')">About</button>
-                    <button onclick="handleMenuClick('Contact Details')">Contact</button>
-                    <button onclick="triggerAdminLogin()">Login 🔑</button>
+                    <button onclick="alert('Dwaraka Collections కు స్వాగతం! మేము ఉత్తమ క్వాలిటీ ప్రొడక్ట్స్ అందిస్తాము.')">About Us</button>
+                    <button onclick="alert('మా వాట్సాప్ హెల్ప్ లైన్ నెంబర్: 91XXXXXXXX')">Contact Us</button>
+                    <hr style="border-color:#eee; margin:2px 0;">
+                    <button onclick="openLoginModal()" style="color:var(--dark-brown); font-weight:bold;">Admin Login 🔑</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="container">
-        <section class="welcome-section">
-            <h2>Welcome To Dwaraka Collections</h2>
+    <main class="container view-section" id="customerView">
+        <div class="brand-section">
+            <h1>Welcome To Dwaraka Collections</h1>
             <p>Quality products with trusted service. Fast delivery and customer support.</p>
-            <button class="order-trigger-btn" onclick="openOrderModal()">Order Now</button>
-        </section>
+            <button class="order-trigger-btn" onclick="openOrderModal()">ORDER NOW</button>
+        </div>
 
-        <section>
-            <h3 class="process-title">Process Of Order</h3>
+        <div class="roadmap-container">
+            <h3 class="roadmap-title">Process Of Order</h3>
             <div class="roadmap">
-                <div class="roadmap-step">1. Select Product</div>
-                <div class="roadmap-step">2. Upload Screenshot</div>
-                <div class="roadmap-step">3. Fill Address</div>
-                <div class="roadmap-step">4. Submit Order</div>
-                <div class="roadmap-step">5. Delivery</div>
+                <div class="roadmap-step">
+                    <div class="roadmap-num">1</div>
+                    <div class="roadmap-text">Select Product</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="roadmap-num">2</div>
+                    <div class="roadmap-text">Upload Screenshot</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="roadmap-num">3</div>
+                    <div class="roadmap-text">Fill Address</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="roadmap-num">4</div>
+                    <div class="roadmap-text">Submit Order</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="roadmap-num">5</div>
+                    <div class="roadmap-text">Delivery</div>
+                </div>
             </div>
-        </section>
+        </div>
     </main>
 
-    <div class="modal-overlay" id="orderModal">
+    <main class="container view-section hidden" id="adminView">
+        <div class="admin-header">
+            <h2>అడ్మిన్ డ్యాష్‌బోర్డ్ (Dwaraka Collections)</h2>
+            <div class="admin-nav-tabs">
+                <button class="admin-tab-btn active" id="tabInbox" onclick="switchAdminTab('inbox')">Inbox</button>
+                <button class="admin-tab-btn" id="tabRupee" onclick="switchAdminTab('rupee')">₹ Income</button>
+                <button class="admin-tab-btn" id="tabArchive" onclick="switchAdminTab('archive')">Archived</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Pending</h4>
+                <div class="value" id="statPending">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Completed</h4>
+                <div class="value" id="statCompleted">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Total</h4>
+                <div class="value" id="statTotal">0</div>
+            </div>
+            <div class="stat-card" style="border-top-color: #2E7D32;">
+                <h4>Total Income</h4>
+                <div class="value">₹<span id="statIncome">0</span></div>
+            </div>
+        </div>
+
+        <div id="adminInboxSection">
+            <h3>📥 కొత్త ఆర్డర్లు</h3>
+            <div id="inboxMessageList" style="margin-top:15px;"></div>
+        </div>
+
+        <div id="adminRupeeSection" class="hidden">
+            <h3>💰 ఆదాయ వివరాలు</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>కస్టమర్ పేరు</th>
+                            <th>తేదీ</th>
+                            <th>ధర (₹)</th>
+                            <th>స్టేటస్</th>
+                        </tr>
+                    </thead>
+                    <tbody id="incomeTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="adminArchiveSection" class="hidden">
+            <h3>📁 ఆర్కైవ్ చేయబడిన ఆర్డర్లు</h3>
+            <div id="archiveMessageList" style="margin-top:15px;"></div>
+        </div>
+    </main>
+
+    <div class="modal-overlay hidden" id="orderModal">
         <div class="modal-content">
             <span class="close-popup" onclick="closeOrderModal()">&times;</span>
-            <div class="modal-header">కొత్త ఆర్డర్ ఫారమ్</div>
-            <form onsubmit="handleOrderSubmit(event)">
-                <div class="form-group">
-                    <label>పూర్తి పేరు (Full Name) *</label>
-                    <input type="text" required placeholder="మీ పేరు రాయండి">
+            <div id="modalFormView">
+                <div class="modal-header">కొత్త ఆర్డర్ ఫారమ్</div>
+                <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+                    <div class="form-group">
+                        <label>పూర్తి పేరు (Full Name) *</label>
+                        <input type="text" id="custName" required placeholder="మీ పేరు రాయండి">
+                    </div>
+                    <div class="form-group">
+                        <label>వాట్సాప్ నెంబర్ *</label>
+                        <input type="tel" id="custWhatsapp" required placeholder="91XXXXXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>ప్రొడక్ట్ ధర (Price - ₹) *</label>
+                        <input type="number" id="prodPrice" required placeholder="500" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>అడ్రస్ (Address) *</label>
+                        <textarea id="custMsg" rows="3" required placeholder="మీ పూర్తి అడ్రస్ ఇక్కడ రాయండి..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">ఆర్డర్ సబ్మిట్ చేయండి</button>
+                </form>
+            </div>
+
+            <div id="modalSuccessView" class="hidden">
+                <div class="success-view">
+                    <div class="success-icon">✓</div>
+                    <h2>ధన్యవాదాలు!</h2>
+                    <p>మీ ఆర్డర్ విజయవంతంగా నమోదైనది.</p>
+                    <div class="stars-container">
+                        <span class="star" onclick="setRating(1)">★</span>
+                        <span class="star" onclick="setRating(2)">★</span>
+                        <span class="star" onclick="setRating(3)">★</span>
+                        <span class="star" onclick="setRating(4)">★</span>
+                        <span class="star" onclick="setRating(5)">★</span>
+                    </div>
+                    <button class="submit-btn" onclick="closeOrderModal()">Close</button>
                 </div>
-                <div class="form-group">
-                    <label>వాట్సాప్ నెంబర్ (WhatsApp Number) *</label>
-                    <input type="tel" required placeholder="91XXXXXXXX">
-                </div>
-                <div class="form-group">
-                    <label>స్క్రీన్‌షాట్ అప్‌లోడ్ (Upload Screenshot) *</label>
-                    <input type="file" accept="image/*" required>
-                </div>
-                <div class="form-group">
-                    <label>పూర్తి అడ్రస్ (Full Address) *</label>
-                    <textarea rows="3" required placeholder="మీ ఇంటి అడ్రస్ ఇక్కడ రాయండి..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">ఆర్డర్ సబ్మిట్ చేయండి</button>
-            </form>
+            </div>
         </div>
     </div>
 
-    <footer>
-        <p><strong>Dwaraka Collections</strong></p>
-        <p>Trusted Shopping Destination</p>
-        <p>&copy; 2026 All Rights Reserved</p>
-    </footer>
-
-    <script>
-        // డ్రాప్‌డౌన్ టోగుల్ చేయడం
-        function toggleDropdown(event) {
-            event.stopPropagation();
-            const menu = document.getElementById('dropdownMenu');
-            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        // మెనూ ఆప్షన్లపై క్లిక్ చేసినప్పుడు
-        function handleMenuClick(page) {
-            alert(page + " వివరాలు త్వరలో అప్‌డేట్ చేయబడతాయి.");
-        }
-
-        // అడ్మిన్ లాగిన్ ప్రాంప్ట్
-        function triggerAdminLogin() {
-            const password = prompt("అడ్మిన్ పాస్‌వర్డ్ ఎంటర్ చేయండి:");
-            if (password === "admin123") {
-                alert("లాగిన్ విజయవంతమైంది! (Dashboard Access Granted)");
-            } else if (password !== null) {
-                alert("తప్పుడు పాస్‌వర్డ్!");
-            }
-        }
-
-        // ఆర్డర్ మోడల్ ఓపెన్/క్లోజ్
-        function openOrderModal() {
-            document.getElementById('orderModal').classList.add('active');
-        }
-
-        function closeOrderModal() {
-            document.getElementById('orderModal').classList.remove('active');
-        }
-
-        // ఫారమ్ సబ్మిషన్
-        function handleOrderSubmit(event) {
-            event.preventDefault();
-            alert("మీ ఆర్డర్ విజయవంతంగా నమోదైంది!");
-            closeOrderModal();
-        }
-
-        // విండోపై ఎక్కడ క్లిక్ చేసినా డ్రాప్‌డౌన్ క్లోజ్ అవ్వడం కోసం
-        window.onclick = function() {
-            document.getElementById('dropdownMenu').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
+    <div class="modal-overlay hidden" id="loginModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-popup" onclick="closeLoginModal()">&times;</span>
+            <div class="modal-header">🔑 అడ్మిన్ లాగిన్</div>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label>User ID</label>
+                    <input type="
