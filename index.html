@@ -1,648 +1,393 @@
 <!DOCTYPE html>
-<html lang="te">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Business Store</title>
-    <style>
-        /* CSS Reset & Variable Definitions */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Order Website</title>
 
-        :root {
-            --bg-color: #FFFFFF;
-            --dark-brown: #4A2E1B;
-            --light-brown: #5D3A22;
-            --soft-cream: #FDFBF7;
-            --text-dark: #333333;
-            --border-color: #E2DCD5;
-            --success-color: #2E7D32;
-            --shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#fff;
+color:#333;
+}
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 20px;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+}
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#4b2e2e;
+}
 
-        /* Header & Navigation */
-        header {
-            background-color: var(--bg-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
+.menu-btn,button{
+background:#4b2e2e;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:8px;
+cursor:pointer;
+}
 
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.hero{
+text-align:center;
+padding:40px 20px;
+}
 
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--dark-brown);
-            letter-spacing: 0.5px;
-        }
+.hero img{
+width:220px;
+border-radius:12px;
+}
 
-        .nav-btns {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-        }
+.process{
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+}
 
-        /* Language Selector Styling */
-        .lang-select {
-            padding: 6px 10px;
-            border: 1px solid var(--dark-brown);
-            background: transparent;
-            color: var(--dark-brown);
-            font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-        }
+.card{
+background:#fff;
+padding:20px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+border-radius:10px;
+text-align:center;
+}
 
-        .menu-dropdown-container {
-            position: relative;
-        }
+footer{
+background:#4b2e2e;
+color:white;
+padding:20px;
+text-align:center;
+margin-top:30px;
+}
 
-        .menu-btn {
-            background-color: var(--dark-brown);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+.popup,.overlay{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
 
-        .menu-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
-            border-radius: 4px;
-            margin-top: 8px;
-            min-width: 160px;
-            display: none;
-            z-index: 200;
-        }
+.box{
+background:white;
+padding:20px;
+width:90%;
+max-width:400px;
+border-radius:10px;
+}
 
-        .menu-dropdown a, .menu-dropdown button {
-            display: block;
-            width: 100%;
-            padding: 10px 15px;
-            text-align: left;
-            background: none;
-            border: none;
-            color: var(--text-dark);
-            font-size: 14px;
-            cursor: pointer;
-            text-decoration: none;
-        }
+input,textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:1px solid #ccc;
+border-radius:6px;
+}
 
-        .menu-dropdown a:hover, .menu-dropdown button:hover {
-            background-color: var(--soft-cream);
-            color: var(--dark-brown);
-        }
+.menu-panel{
+position:fixed;
+right:-250px;
+top:0;
+height:100%;
+width:220px;
+background:#4b2e2e;
+color:white;
+padding:20px;
+transition:.4s;
+}
 
-        /* View Toggle (Logout Link Style) */
-        .logout-btn {
-            background: none;
-            border: 1px solid #dc3545;
-            color: #dc3545;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-        }
+.menu-panel a{
+display:block;
+color:white;
+margin:15px 0;
+text-decoration:none;
+}
 
-        /* Main Layout */
-        .view-section {
-            padding: 30px 0;
-        }
+.stats{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
 
-        .hidden {
-            display: none !important;
-        }
+.stat{
+background:#f4f4f4;
+padding:15px;
+border-radius:8px;
+text-align:center;
+}
 
-        /* ==========================================
-           CUSTOMER VIEW
-        ========================================== */
-        .brand-section {
-            text-align: center;
-            margin: 20px 0 40px 0;
-        }
+.star{
+font-size:28px;
+cursor:pointer;
+}
 
-        .brand-img {
-            max-width: 100%;
-            height: auto;
-            max-height: 380px;
-            object-fit: cover;
-            border-radius: 6px;
-            box-shadow: var(--shadow);
-            margin-bottom: 25px;
-        }
-
-        .brand-details h1 {
-            color: var(--dark-brown);
-            font-size: 28px;
-            margin-bottom: 12px;
-        }
-
-        .brand-details p {
-            font-size: 15px;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto 25px auto;
-        }
-
-        .order-trigger-btn {
-            background-color: var(--dark-brown);
-            color: white;
-            border: none;
-            padding: 14px 36px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-            transition: all 0.2s;
-            box-shadow: 0 4px 6px rgba(74, 46, 27, 0.15);
-        }
-
-        .order-trigger-btn:hover {
-            background-color: var(--light-brown);
-        }
-
-        .process-section {
-            background-color: var(--soft-cream);
-            padding: 25px;
-            border-radius: 6px;
-            margin-top: 50px;
-            border: 1px solid var(--border-color);
-        }
-
-        .process-section h3 {
-            color: var(--dark-brown);
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-
-        .step-num {
-            background-color: var(--dark-brown);
-            color: white;
-            width: 28px;
-            height: 28px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        /* ==========================================
-           POPUP / MODAL
-        ========================================== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background-color: white;
-            width: 92%;
-            max-width: 480px;
-            border-radius: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            padding: 24px;
-            position: relative;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--dark-brown);
-            margin-bottom: 18px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 13px;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--dark-brown);
-        }
-
-        .submit-btn {
-            background-color: var(--dark-brown);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 10px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-top: 8px;
-        }
-
-        .submit-btn:hover {
-            background-color: var(--light-brown);
-        }
-
-        .close-popup {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 22px;
-            cursor: pointer;
-            color: #999;
-        }
-
-        /* Success & Feedback View */
-        .success-view {
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .success-icon {
-            color: var(--success-color);
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .stars-container {
-            font-size: 28px;
-            margin: 15px 0;
-            cursor: pointer;
-        }
-
-        .star {
-            color: #ccc;
-            transition: color 0.1s;
-        }
-
-        .star:hover, .star.selected {
-            color: #FFD700;
-        }
-
-        /* ==========================================
-           ADMIN VIEW
-        ========================================== */
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-        }
-
-        .admin-nav-tabs {
-            display: flex;
-            gap: 10px;
-        }
-
-        .admin-tab-btn {
-            background: none;
-            border: 1px solid var(--border-color);
-            color: var(--text-dark);
-            padding: 6px 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            border-radius: 4px;
-        }
-
-        .admin-tab-btn.active {
-            background-color: var(--dark-brown);
-            color: white;
-            border-color: var(--dark-brown);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background-color: var(--soft-cream);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        .stat-card h4 {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #777;
-            margin-bottom: 4px;
-        }
-
-        .stat-card .value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--dark-brown);
-        }
-
-        /* Tables & Playlists */
-        .table-responsive {
-            overflow-x: auto;
-            margin-top: 12px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            text-align: left;
-            font-size: 13px;
-        }
-
-        th {
-            background-color: var(--soft-cream);
-            color: var(--dark-brown);
-            font-weight: 600;
-        }
-
-        .badge {
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .badge-pending { background-color: #FFF3CD; color: #856404; }
-        .badge-completed { background-color: #D4EDDA; color: #155724; }
-
-        .order-msg-item {
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            background-color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-        }
-
-        .order-msg-item:hover {
-            background-color: var(--soft-cream);
-        }
-
-        /* Smart Print Button (Only in requested containers) */
-        .print-area {
-            margin-top: 10px;
-        }
-        
-        .print-btn {
-            background-color: #f8f9fa;
-            border: 1px solid #ccc;
-            color: #333;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 10px;
-        }
-
-        .print-btn:hover {
-            background-color: #e2e6ea;
-        }
-
-        /* Compact Footer */
-        footer {
-            background-color: var(--dark-brown);
-            color: rgba(255,255,255,0.8);
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 50px;
-            font-size: 13px;
-            border-top: 3px solid var(--light-brown);
-        }
-
-        /* ==========================================
-           PRINT CONFIGURATION
-        ========================================== */
-        @media print {
-            header, footer, .nav-btns, .print-btn, .order-trigger-btn, .modal-overlay, .admin-header, .action-btn, input[type="checkbox"] {
-                display: none !important;
-            }
-            body { background: white; color: black; }
-            .view-section { padding: 0 !important; }
-            table, th, td { border: 1px solid #000 !important; }
-        }
-    </style>
+.order-card{
+padding:10px;
+border:1px solid #ddd;
+margin:10px 0;
+border-radius:8px;
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <div class="container nav-container">
-            <div class="logo" id="txtLogo">మన ఆన్‌లైన్ బిజినెస్</div>
-            <div class="nav-btns">
-                <select class="lang-select" onchange="changeLanguage(this.value)">
-                    <option value="te">తెలుగు</option>
-                    <option value="en">English</option>
-                </select>
+<header>
+<div class="logo">YOUR BRAND</div>
+<button class="menu-btn" onclick="openMenu()">☰</button>
+</header>
 
-                <div class="menu-dropdown-container">
-                    <button class="menu-btn" onclick="toggleMenuDropdown()">☰ <span id="txtMenu">Menu</span></button>
-                    <div class="menu-dropdown" id="menuDropdown">
-                        <a href="#" onclick="showSection('customer')">Home</a>
-                        <button onclick="openAdminLogin()"><b style="color:var(--dark-brown)">🔒 Admin Login</b></button>
-                    </div>
-                </div>
+<div class="menu-panel" id="menu">
+<h3>Menu</h3>
 
-                <button class="logout-btn hidden" id="adminLogoutBtn" onclick="logoutAdmin()">Logout</button>
-            </div>
-        </div>
-    </header>
+<a href="#">About</a>
+<a href="#">Contact</a>
+<a href="#">Instagram</a>
+<a onclick="adminLogin()">Admin Login</a>
 
-    <main class="container view-section" id="customerView">
-        <div class="brand-section">
-            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Brand" class="brand-img">
-            <div class="brand-details">
-                <h1 id="txtBrandTitle">మా బ్రాండ్ స్టోర్ కి స్వాగతం</h1>
-                <p id="txtBrandDesc">మేము నాణ్యమైన ఉత్పత్తులను అత్యంత తక్కువ ధరకే అందిస్తాము. మా కలెక్షన్ చూసి మీకు నచ్చిన ప్రొడక్ట్ ని ఇప్పుడే ఆర్డర్ చేయండి.</p>
-                <button class="order-trigger-btn" id="txtOrderBtn" onclick="openOrderModal()">Order Now (ఇప్పుడే ఆర్డర్ చేయండి)</button>
-            </div>
-        </div>
+<button onclick="closeMenu()">Close</button>
+</div>
 
-        <div class="process-section">
-            <h3 id="txtProcessTitle">📦 ఆర్డర్ చేసే విధానం (Process of Order)</h3>
-            <div class="steps-grid">
-                <div class="step">
-                    <div class="step-num">1</div>
-                    <p id="txtStep1"><b>'Order Now'</b> బటన్ పై క్లిక్ చేయండి.</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">2</div>
-                    <p id="txtStep2">మీ వివరాలు నింపి, ప్రొడక్ట్ <b>Screenshot</b> ని అప్‌లోడ్ చేయండి.</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">3</div>
-                    <p id="txtStep3"><b>Submit</b> చేసి, మీ రేటింగ్ (Feedback Stars) ఇవ్వండి.</p>
-                </div>
-            </div>
-        </div>
-    </main>
+<section class="hero">
 
+<img src="brand-image.jpg">
 
-    <main class="container view-section hidden" id="adminView">
-        <div class="admin-header">
-            <h2 id="txtAdminPanelTitle">అడ్మిన్ మేనేజ్‌మెంట్ డ్యాష్‌బోర్డ్</h2>
-            <div class="admin-nav-tabs">
-                <button class="admin-tab-btn active" id="tabInbox" onclick="switchAdminTab('inbox')">🐦 Inbox</button>
-                <button class="admin-tab-btn" id="tabRupee" onclick="switchAdminTab('rupee')">₹ Income</button>
-                <button class="admin-tab-btn" id="tabArchive" onclick="switchAdminTab('archive')">📁 Archived</button>
-            </div>
-        </div>
+<h2>Upload Social Media Screenshot & Order Easily</h2>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h4 id="lblStatPending">Pending Orders</h4>
-                <div class="value" id="statPending">0</div>
-            </div>
-            <div class="stat-card">
-                <h4 id="lblStatCompleted">Completed Orders</h4>
-                <div class="value" id="statCompleted">0</div>
-            </div>
-            <div class="stat-card">
-                <h4 id="lblStatTotal">Total Orders</h4>
-                <div class="value" id="statTotal">0</div>
-            </div>
-            <div class="stat-card" style="border-top: 3px solid #2E7D32;">
-                <h4 id="lblStatIncome">Total Income</h4>
-                <div class="value">₹<span id="statIncome">0</span></div>
-            </div>
-        </div>
+<button onclick="showOrder()">Order Now</button>
 
-        <div id="adminInboxSection">
-            <h3 id="txtInboxTitle">📥 కొత్త ఆర్డర్ల మెసేజ్ లిస్ట్ (Inbox)</h3>
-            <div id="inboxMessageList" style="margin-top: 12px;"></div>
-        </div>
+</section>
 
-        <div id="adminRupeeSection" class="hidden print-area">
-            <button class="print-btn" onclick="window.print()">🖨️ Print Income Report</button>
-            <h3 id="txtIncomeTitle">💰 ఆదాయం మరియు పూర్తి వివరాలు (Income Details)</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th id="thName">కస్టమర్ పేరు</th>
-                            <th id="thDate">తేదీ</th>
-                            <th id="thAmt">మొత్తం ఆదాయం</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="incomeTableBody"></tbody>
-                </table>
-            </div>
-        </div>
+<h2 style="text-align:center">Process</h2>
 
-        <div id="adminArchiveSection" class="hidden print-area">
-            <button class="print-btn" onclick="window.print()">🖨️ Print Archived Messages</button>
-            <h3 id="txtArchiveTitle">📁 పూర్తి చేసిన / మినిమైజ్ చేసిన మెసేజ్‌లు (Archived)</h3>
-            <div id="archiveMessageList" style="margin-top: 12px;"></div>
-        </div>
-    </main>
+<div class="process">
 
+<div class="card">1. Upload Screenshot</div>
 
-    <div class="modal-overlay hidden" id="orderModal">
-        <div class="modal-content">
-            <span class="close-popup" onclick="closeOrderModal()">&times;</span>
-            
-            <div id="modalFormView">
-                <div class="modal-header" id="txtFormHeader">కొత్త ఆర్డర్ ఫారమ్</div>
-                <form id="orderForm" onsubmit="handleOrderSubmit(event)">
-                    <div class="form-group">
-                        <label id="lblFullName">పూర్তি పేరు (Full Name) *</label>
-                        <input type="text" id="custName" required>
-                    </div>
-                    <div class="form-group">
-                        <label id="lblWhatsapp">వాట్సాప్ నెంబర్ (WhatsApp Number) *</label>
-                        <input type="tel" id="custWhatsapp" required placeholder="91XXXXXXXX">
-                    </div>
-                    <div class="form-group">
-                        <label id="lblScreenshot">ప్రొడక్ట్ స్క్రీన్‌షాట్ (Upload Screenshot) *</label>
-                        <input type="file" id="custScreenshot" accept="image/*" required>
-                    </div>
-                    
+<div class="card">2. Submit Details</div>
+
+<div class="card">3. We Contact You</div>
+
+<div class="card">4. Confirm Order</div>
+
+</div>
+
+<footer>
+
+Contact Us <br>
+Whatsapp: XXXXXXXX
+
+</footer>
+
+<!-- ORDER POPUP -->
+
+<div class="popup" id="orderPopup">
+
+<div class="box">
+
+<h3>Place Order</h3>
+
+<input id="name" placeholder="Full Name">
+
+<input id="wa" placeholder="WhatsApp">
+
+<input type="file" id="img">
+
+<textarea id="address" placeholder="Address"></textarea>
+
+<textarea id="msg" placeholder="Optional Message"></textarea>
+
+<label>
+<input type="checkbox">
+I confirm this screenshot product
+</label>
+
+<button onclick="submitOrder()">Submit</button>
+
+<button onclick="closeOrder()">Close</button>
+
+<div id="feedback" style="display:none">
+
+<h4>Feedback</h4>
+
+<span class="star" onclick="rate(1)">⭐</span>
+<span class="star" onclick="rate(2)">⭐</span>
+<span class="star" onclick="rate(3)">⭐</span>
+<span class="star" onclick="rate(4)">⭐</span>
+<span class="star" onclick="rate(5)">⭐</span>
+
+</div>
+
+</div>
+</div>
+
+<!-- ADMIN LOGIN -->
+
+<div class="popup" id="loginPopup">
+
+<div class="box">
+
+<h3>Admin Login</h3>
+
+<input id="user" placeholder="Username">
+
+<input id="pass" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+</div>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="overlay" id="dashboard">
+
+<div class="box" style="max-width:700px">
+
+<h2>Dashboard</h2>
+
+<div class="stats">
+
+<div class="stat">
+Total Orders
+<h3 id="total">0</h3>
+</div>
+
+<div class="stat">
+Pending
+<h3 id="pending">0</h3>
+</div>
+
+<div class="stat">
+Completed
+<h3 id="completed">0</h3>
+</div>
+
+<div class="stat">
+₹ Income
+<h3 id="income">0</h3>
+</div>
+
+</div>
+
+<h3>📩 Inbox</h3>
+
+<div id="orders">
+
+<div class="order-card">
+
+<input type="checkbox">
+
+Customer Order Example
+
+<button>Complete</button>
+
+</div>
+
+</div>
+
+<h3>Archived</h3>
+
+<div id="archive"></div>
+
+<button onclick="closeDash()">Close</button>
+
+</div>
+
+</div>
+
+<script>
+
+function openMenu(){
+document.getElementById("menu").style.right="0";
+}
+
+function closeMenu(){
+document.getElementById("menu").style.right="-250px";
+}
+
+function showOrder(){
+document.getElementById("orderPopup").style.display="flex";
+}
+
+function closeOrder(){
+document.getElementById("orderPopup").style.display="none";
+}
+
+function submitOrder(){
+
+alert("Order Submitted Successfully");
+
+document.getElementById("feedback").style.display="block";
+
+/*
+
+Connect Apps Script Here
+
+fetch("YOUR_APPS_SCRIPT_URL")
+
+*/
+
+}
+
+function rate(num){
+
+alert("Rated "+num+" stars");
+
+closeOrder();
+
+}
+
+function adminLogin(){
+
+document.getElementById("loginPopup").style.display="flex";
+
+}
+
+function login(){
+
+let u=document.getElementById("user").value;
+
+let p=document.getElementById("pass").value;
+
+if(u=="admin" && p=="admin"){
+
+document.getElementById("loginPopup").style.display="none";
+
+document.getElementById("dashboard").style.display="flex";
+
+}
+
+else{
+
+alert("Wrong Login");
+
+}
+
+}
+
+function closeDash(){
+
+document.getElementById("dashboard").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>
