@@ -79,18 +79,23 @@
         }
 
         /* Small Corner Menu Button */
-        <div class="menu-container">
-         <button class="menu-btn-small" onclick="toggleDropdown()">&#8942;</button>
-  
-         <div id="myDropdown" class="dropdown-content">
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-          <a href="#faq">FAQ</a>
-          <a href="#social">Social Media</a>
-          <a href="#login">Login</a>
-         </div>
-        </div>
+        .menu-btn-small {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
 
+        .menu-btn-small:hover {
+            background-color: white;
+            color: var(--dark-brown);
+            border-color: white;
+        }
 
         /* Stats container with Icons at the bottom of header */
         .header-stats-bar {
@@ -591,4 +596,4 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Dwaraka Collections. All Rights Reserved. Crafted 
+            <p>&copy; 2026 Dwaraka Collections. All Rights Reserved 
