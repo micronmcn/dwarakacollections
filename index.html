@@ -441,16 +441,19 @@
         <div class="container" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; flex-grow: 1;">
             <div class="header-top-bar">
                 <div class="brand-title-mini">Dwaraka Collections</div>
-                <button class="menu-btn-small">
-                 <span>&#9776; Menu</span>
-                </button>
-               <div class="menu-dropdown">
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-                <a href="#faq">FAQ</a>
-                <a href="#social">Social Links</a>
-                <a href="#login">Login</a>
-               </div>
+                <div class="menu-container">
+                 <button class="menu-btn-small" onclick="toggleDropdown(event)">
+                  &#9776; Menu
+                 </button>
+                 <div class="menu-dropdown" id="menuDropdown">
+                  <a href="#about">About</a>
+                  <a href="#contact">Contact</a>
+                  <a href="#faq">FAQ</a>
+                  <a href="#social">Social Links</a>
+                  <a href="#login">Login</a>
+                 </div>
+                </div>
+
             </div>
 
             <!-- Stats Layer with Official Icons -->
