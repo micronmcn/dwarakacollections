@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dwaraka Collections</title>
-    <!-- FontAwesome for Instagram and Customer Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -24,13 +23,13 @@
             --border-color: #E6DFD7;
             --success-color: #2E7D32;
             --danger-color: #C62828;
-            --road-bg: #FDFBF7;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -39,7 +38,6 @@
             margin: 0 auto;
         }
 
-        /* 1. Full Background Banner Configured correctly using 1000240034.png */
         header {
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), 
                         url('file_0000000019b07208b24bcdfb699c657c.png') no-repeat center top;
@@ -68,7 +66,6 @@
             width: 100%;
         }
 
-        /* Single line clean top branding */
         .brand-title-mini {
             font-size: 18px;
             font-weight: 800;
@@ -78,7 +75,6 @@
             color: #FFFFFF;
         }
 
-        /* Small Corner Menu Button */
         .menu-btn-small {
             background: rgba(0, 0, 0, 0.5);
             color: white;
@@ -97,7 +93,6 @@
             border-color: white;
         }
 
-        /* Stats container with Icons at the bottom of header */
         .header-stats-bar {
             display: flex;
             gap: 20px;
@@ -117,46 +112,98 @@
             gap: 6px;
         }
 
-        .stat-item i.fa-instagram {
-            color: #E1306C;
-        }
+        .stat-item i.fa-instagram { color: #E1306C; }
+        .stat-item i.fa-users { color: #00b0ff; }
 
-        .stat-item i.fa-users {
-            color: #00b0ff;
-        }
-
-        /* Dropdown Options */
-        .dropdown-menu {
-            position: absolute;
-            top: 50px;
-            right: 5%;
+        /* RIGHT SIDE SLIDE MENU */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
             background-color: white;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-            width: 180px;
-            display: none;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+            z-index: 10000;
+            transition: right 0.4s ease;
+            padding: 25px;
+            display: flex;
             flex-direction: column;
-            z-index: 2000;
-            overflow: hidden;
         }
 
-        .dropdown-menu button {
+        .side-menu.open {
+            right: 0;
+        }
+
+        .side-menu-close {
+            align-self: flex-end;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--dark-brown);
             background: none;
             border: none;
-            padding: 12px 18px;
-            text-align: left;
-            font-size: 14px;
-            cursor: pointer;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: all 0.2s;
+            margin-bottom: 20px;
         }
 
-        .dropdown-menu button:hover {
-            background-color: var(--soft-cream);
+        .side-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .side-menu-links a, .side-menu-links button {
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-decoration: none;
+            cursor: pointer;
+            padding: 10px 5px;
+            border-bottom: 1px solid var(--border-color);
+            transition: color 0.2s;
+        }
+
+        .side-menu-links a:hover, .side-menu-links button:hover {
             color: var(--dark-brown);
-            padding-left: 22px;
+        }
+
+        .side-menu-socials {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .side-menu-socials h5 {
+            margin-bottom: 10px;
+            color: #777;
+        }
+
+        .social-icons-row {
+            display: flex;
+            gap: 15px;
+            font-size: 22px;
+        }
+
+        .social-icons-row a {
+            color: var(--dark-brown);
+            transition: transform 0.2s;
+        }
+
+        .social-icons-row a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Backdrop Overlay for Menu & Modals */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 9999;
+            display: none;
         }
 
         .view-section {
@@ -167,7 +214,6 @@
             display: none !important;
         }
 
-        /* Main Headline Area */
         .welcome-section {
             text-align: center;
             margin: 40px 0;
@@ -205,7 +251,7 @@
             transform: translateY(-2px);
         }
 
-        /* Roadmap UI Design (Connected Flow) */
+        /* Roadmap UI Design */
         .roadmap-wrap {
             background-color: #FAF8F5;
             padding: 40px 20px;
@@ -218,7 +264,6 @@
             color: var(--dark-brown);
             margin-bottom: 40px;
             font-size: 24px;
-            position: relative;
         }
 
         .roadmap-flow {
@@ -229,7 +274,6 @@
             position: relative;
         }
 
-        /* Line connecting the steps */
         .roadmap-flow::before {
             content: '';
             position: absolute;
@@ -262,7 +306,6 @@
             justify-content: center;
             font-weight: bold;
             font-size: 18px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
 
         .roadmap-card {
@@ -270,16 +313,16 @@
             padding: 16px 20px;
             border-radius: 8px;
             flex-grow: 1;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
             border: 1px solid var(--border-color);
         }
 
         .roadmap-card h4 {
             color: var(--dark-brown);
             font-size: 16px;
+            text-align: left;
+            padding-left: 10px;
         }
 
-        /* Detailed About Section */
         .info-block {
             padding: 30px;
             background: white;
@@ -296,7 +339,6 @@
             display: inline-block;
         }
 
-        /* FAQ Accordion Styling */
         .faq-item {
             border-bottom: 1px solid var(--border-color);
             padding: 15px 0;
@@ -309,7 +351,7 @@
             justify-content: space-between;
         }
 
-        /* Form Overlay Popup Fix */
+        /* POPUP MODALS */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -375,6 +417,11 @@
             font-weight: bold;
             cursor: pointer;
             border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--light-brown);
         }
 
         .close-popup {
@@ -386,7 +433,32 @@
             color: #888;
         }
 
-        /* Full Interactive Footer */
+        /* Star Rating Styles */
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 30px;
+            flex-direction: row-reverse;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: var(--gold);
+        }
+
         footer {
             background-color: var(--dark-brown);
             color: #E6DFD7;
@@ -437,24 +509,34 @@
 </head>
 <body>
 
-    <!-- Header Grid with Image Background and Top Single line controls -->
+    <div class="menu-overlay" id="menuOverlay" onclick="closeSideMenu()"></div>
+
+    <div class="side-menu" id="sideMenu">
+        <button class="side-menu-close" onclick="closeSideMenu()">&times;</button>
+        <div class="side-menu-links">
+            <a onclick="scrollToSection('aboutSection')">About Us</a>
+            <a onclick="scrollToSection('contactSection')">Contact Us</a>
+            <a onclick="scrollToSection('faqSection')">FAQ</a>
+            <a onclick="alert('Privacy & Policy Page Coming Soon!')">Privacy & Policy</a>
+            <button onclick="openLoginModal()" style="color: var(--dark-brown);">Login 🔑</button>
+        </div>
+        <div class="side-menu-socials">
+            <h5>Follow Us</h5>
+            <div class="social-icons-row">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="container" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; flex-grow: 1;">
             <div class="header-top-bar">
                 <div class="brand-title-mini">Dwaraka Collections</div>
-                <button class="menu-btn-small" onclick="toggleDropdown(event)">☰ Menu</button>
-                
-                <!-- Expanded Dropdown Links -->
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <button onclick="scrollToSection('aboutSection')">About Us</button>
-                    <button onclick="scrollToSection('contactSection')">Contact Us</button>
-                    <button onclick="scrollToSection('faqSection')">FAQs</button>
-                    <hr style="border-color:#eee; margin:2px 0;">
-                    <button onclick="openLoginModal()" style="color:var(--dark-brown); font-weight:bold;">Admin Login 🔑</button>
-                </div>
+                <button class="menu-btn-small" onclick="openSideMenu()">☰ Menu</button>
             </div>
 
-            <!-- Stats Layer with Official Icons -->
             <div class="header-stats-bar">
                 <div class="stat-item">
                     <i class="fab fa-instagram"></i> 12.5K Followers
@@ -466,7 +548,6 @@
         </div>
     </header>
 
-    <!-- Main Content Stream -->
     <main class="container view-section" id="customerView">
         <div class="welcome-section">
             <h1>Welcome To Dwaraka Collections</h1>
@@ -474,7 +555,6 @@
             <button class="order-trigger-btn" onclick="openOrderModal()">ORDER NOW</button>
         </div>
 
-        <!-- Order Workflow Root Map Section -->
         <div class="roadmap-wrap">
             <h3 class="roadmap-title">Process Of Order</h3>
             <div class="roadmap-flow">
@@ -501,37 +581,33 @@
             </div>
         </div>
 
-        <!-- Expanded About Matter Section -->
         <div class="info-block" id="aboutSection">
             <h3>About Dwaraka Collections</h3>
             <p style="margin-bottom: 10px;">Dwaraka Collections అనేది చేనేత మరియు సాంప్రదాయ వస్త్రాల రంగంలో ఒక నమ్మకమైన బ్రాండ్. మా క్లయింట్‌లకు అత్యుత్తమ నాణ్యత కలిగిన డిజైన్‌లు, ప్రత్యేకమైన హ్యాండ్లూమ్ డిజైన్‌లు అందించడమే మా ముఖ్య ఉద్దేశ్యం.</p>
             <p>మేము నేరుగా మా నైపుణ్యం కలిగిన నేత కార్మికుల (Weavers) నుండి సేకరించిన ప్యూర్ కలెక్షన్స్ అందిస్తాము. కలర్స్, క్వాలిటీ మరియు కస్టమర్ సంతృప్తి విషయంలో మేము ఎప్పుడూ రాజీ పడం. ప్రతి ఆర్డర్ సురక్షితమైన ప్యాకింగ్ మరియు ఫాస్ట్ డెలివరీ ద్వారా మీ ముందుకు వస్తుంది.</p>
         </div>
 
-        <!-- FAQ Area Added -->
         <div class="info-block" id="faqSection">
             <h3>Frequently Asked Questions (FAQ)</h3>
             <div class="faq-item">
-                <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('hidden')">Q1. ఆర్డర్ ఎలా సబ్మిట్ చేయాలి? <span>+</span></div>
+                <div class="faq-question" onclick="toggleFaq(this)">Q1. ఆర్డర్ ఎలా సబ్మిట్ చేయాలి? <span>+</span></div>
                 <p class="hidden" style="padding:10px 0; color:#555;">పైన ఉన్న 'Order Now' బటన్ క్లిక్ చేసి, మీ వివరాలు మరియు అడ్రస్ నింపి నేరుగా సబ్మిట్ చేయవచ్చు.</p>
             </div>
             <div class="faq-item">
-                <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('hidden')">Q2. డెలివరీకి ఎన్ని రోజులు పడుతుంది? <span>+</span></div>
+                <div class="faq-question" onclick="toggleFaq(this)">Q2. డెలివరీకి ఎన్ని రోజులు పడుతుంది? <span>+</span></div>
                 <p class="hidden" style="padding:10px 0; color:#555;">సాధారణంగా ఆర్డర్ చేసిన 4 నుండి 7 పని దినాలలో (Working Days) ప్రొడక్ట్ డెలివరీ చేయబడుతుంది.</p>
             </div>
         </div>
     </main>
 
-    <!-- ADMIN PANEL -->
     <main class="container view-section hidden" id="adminView">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h2>Admin Dashboard Control</h2>
             <button class="submit-btn" style="width:auto; padding:8px 20px; background:#c62828;" onclick="logoutAdmin()">Logout</button>
         </div>
-        <p>Welcome back, Administrator. Manage your customer metrics and incoming pipeline here.</p>
+        <p>Welcome back, Administrator.</p>
     </main>
 
-    <!-- ORDER FORM MODAL (Z-INDEX OVERLAY FIXED) -->
     <div class="modal-overlay hidden" id="orderModal">
         <div class="modal-content">
             <span class="close-popup" onclick="closeOrderModal()">&times;</span>
@@ -539,22 +615,51 @@
             <form id="orderForm" onsubmit="handleOrderSubmit(event)">
                 <div class="form-group">
                     <label>పూర్తి పేరు (Full Name) *</label>
-                    <input type="text" id="custName" required placeholder="మీ పేరు">
+                    <input type="text" required placeholder="మీ పేరు">
                 </div>
                 <div class="form-group">
-                    <label>వాట్సాప్ నెంబర్ *</label>
-                    <input type="tel" id="custWhatsapp" required placeholder="91XXXXXXXX">
+                    <label>ఫోన్ నెంబర్ (Phone Number) *</label>
+                    <input type="tel" required placeholder="91XXXXXXXX">
                 </div>
                 <div class="form-group">
-                    <label>అడ్రస్ (Address) *</label>
-                    <textarea id="custMsg" rows="3" required placeholder="మీ పూర్తి అడ్రస్ ఇక్కడ రాయండి..."></textarea>
+                    <label>ప్రొడక్ట్ స్క్రీన్‌షాట్ అప్‌లోడ్ (Upload Product Screenshot) *</label>
+                    <input type="file" accept="image/*" required>
                 </div>
-                <button type="submit" class="submit-btn">ఆర్డర్ పూర్తి చేయండి</button>
+                <div class="form-group">
+                    <label>పూర్తి అడ్రస్ (Full Address) *</label>
+                    <textarea rows="3" required placeholder="మీ పూర్తి అడ్రస్ ఇక్కడ రాయండి..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>సందేశం (Text Message)</label>
+                    <textarea rows="2" placeholder="ఏదైనా అదనపు సమాచారం..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">సబ్మిట్ ఆర్డర్</button>
             </form>
         </div>
     </div>
 
-    <!-- LOGIN MODAL -->
+    <div class="modal-overlay hidden" id="feedbackModal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-header" style="border:none; margin-bottom: 10px;">మీ ఫీడ్‌బ్యాక్ ఇవ్వండి</div>
+            <p>మా సర్వీస్ మీకు నచ్చిందా? దయచేసి రేటింగ్ ఇవ్వండి.</p>
+            <form id="feedbackForm" onsubmit="handleFeedbackSubmit(event)">
+                
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" required/><label for="star5" class="fas fa-star"></label>
+                    <input type="radio" id="star4" name="rating" value="4"/><label for="star4" class="fas fa-star"></label>
+                    <input type="radio" id="star3" name="rating" value="3"/><label for="star3" class="fas fa-star"></label>
+                    <input type="radio" id="star2" name="rating" value="2"/><label for="star2" class="fas fa-star"></label>
+                    <input type="radio" id="star1" name="rating" value="1"/><label for="star1" class="fas fa-star"></label>
+                </div>
+
+                <div class="form-group">
+                    <textarea id="feedbackText" rows="3" placeholder="మీ అభిప్రాయాన్ని ఇక్కడ రాయండి..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">సబ్మిట్ ఫీడ్‌బ్యాక్</button>
+            </form>
+        </div>
+    </div>
+
     <div class="modal-overlay hidden" id="loginModal">
         <div class="modal-content" style="max-width: 380px;">
             <span class="close-popup" onclick="closeLoginModal()">&times;</span>
@@ -573,7 +678,6 @@
         </div>
     </div>
 
-    <!-- Expanded Full Footer Component -->
     <footer id="contactSection">
         <div class="container footer-grid">
             <div class="footer-col">
@@ -596,4 +700,96 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Dwaraka Collections. All Rights Reserved 
+            <p>&copy; 2026 Dwaraka Collections. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Right Slide Menu Functions
+        function openSideMenu() {
+            document.getElementById('sideMenu').classList.add('open');
+            document.getElementById('menuOverlay').style.display = 'block';
+        }
+
+        function closeSideMenu() {
+            document.getElementById('sideMenu').classList.remove('open');
+            document.getElementById('menuOverlay').style.display = 'none';
+        }
+
+        function scrollToSection(id) {
+            closeSideMenu();
+            const element = document.getElementById(id);
+            if(element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 2. Order Modal Popups
+        function openOrderModal() {
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+            document.getElementById('orderForm').reset();
+        }
+
+        // Order Submit -> Shows Feedback Popup
+        function handleOrderSubmit(e) {
+            e.preventDefault();
+            document.getElementById('orderModal').classList.add('hidden'); // Close Order Form
+            document.getElementById('feedbackModal').classList.remove('hidden'); // Open Feedback Form
+        }
+
+        // Feedback Submit -> Closes all popups
+        function handleFeedbackSubmit(e) {
+            e.preventDefault();
+            alert('మీ ఆర్డర్ మరియు ఫీడ్‌బ్యాక్ విజయవంతంగా సబ్మిట్ చేయబడింది! ధన్యవాదాలు. ❤️');
+            document.getElementById('feedbackModal').classList.add('hidden'); // Close Feedback Form
+            document.getElementById('orderForm').reset();
+            document.getElementById('feedbackForm').reset();
+        }
+
+        // 3. Admin Login Modals
+        function openLoginModal() {
+            closeSideMenu();
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+            
+            if(user === 'admin' && pass === '1234') {
+                document.getElementById('loginModal').classList.add('hidden');
+                document.getElementById('customerView').classList.add('hidden');
+                document.getElementById('adminView').classList.remove('hidden');
+            } else {
+                alert('తప్పుడు యూజర్ ఐడి లేదా పాస్‌వర్డ్!');
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('adminView').classList.add('hidden');
+            document.getElementById('customerView').classList.remove('hidden');
+        }
+
+        // FAQ Toggle Feature
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            answer.classList.toggle('hidden');
+            const icon = element.querySelector('span');
+            if(answer.classList.contains('hidden')) {
+                icon.innerText = '+';
+            } else {
+                icon.innerText = '-';
+            }
+        }
+    </script>
+</body>
+</html>
