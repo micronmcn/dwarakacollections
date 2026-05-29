@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Dwaraka Collections</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-color: #FFFFFF;
+            --dark-brown: #4A2E1B;
+            --light-brown: #5D3A22;
+            --gold: #D4AF37;
+            --soft-cream: #FDFBF7;
+            --text-dark: #333333;
+            --border-color: #E6DFD7;
+        }
+
+        body {
+            background-color: var(--soft-cream);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Top Navigation Bar with Back Arrow */
+        .nav-header {
+            background-color: var(--dark-brown);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-arrow {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: none;
+            border: none;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* About Content Section */
+        .about-wrapper {
+            padding: 50px 0;
+        }
+
+        .main-about-card {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-top: 6px solid var(--dark-brown);
+        }
+
+        @media (max-width: 768px) {
+            .main-about-card {
+                padding: 25px 15px;
+            }
+        }
+
+        .about-heading {
+            color: var(--dark-brown);
+            font-size: 32px;
+            margin-bottom: 20px;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: #444444;
+            font-size: 16px;
+            text-align: justify;
+        }
+
+        .highlight-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--light-brown);
+            border-left: 4px solid var(--dark-brown);
+            padding-left: 15px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        /* Core Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .value-card {
+            background: var(--soft-cream);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-card i {
+            font-size: 28px;
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+        }
+
+        .value-card h4 {
+            color: var(--dark-brown);
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .value-card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Required Action Button Section */
+        .action-container {
+            text-align: center;
+            margin-top: 45px;
+        }
+
+        .action-btn {
+            background-color: var(--dark-brown);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(74, 46, 27, 0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background-color: var(--light-brown);
+            transform: translateY(-2px);
+        }
+
+        /* Full Footer Component (Same as Home Page) */
+        footer {
+            background-color: var(--dark-brown);
+            color: #E6DFD7;
+            padding: 40px 0 20px 0;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col p, .footer-col ul {
+            list-style: none;
+            line-height: 1.8;
+        }
+
+        .footer-col ul li a {
+            color: #E6DFD7;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-header">
+        <div class="container nav-container">
+            <a href="index.html" class="back-arrow" onclick="if(history.length > 1){ event.preventDefault(); history.back(); }">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="page-title">Dwaraka Collections</div>
+        </div>
+    </div>
+
+    <main class="container about-wrapper">
+        <div class="main-about-card">
+            <h1 class="about-heading">Our Heritage & Story</h1>
+            
+            <div class="about-text">
+                <p>Welcome to Dwaraka Collections, where timeless Indian tradition meets modern elegance. Established with a profound passion for preserving our cultural heritage, we specialize in bringing you the finest, most authentic handloom and traditional attire directly from the heart of India's rural weaving clusters. Our journey began with a simple yet powerful mission: to celebrate the unmatched craftsmanship of local artisans and share their incredible hand-woven masterpieces with the world.</p>
+                
+                <p>In today’s fast-paced world of machine-made commercial fashion, the unique charm, texture, and soul of a genuine hand-woven fabric are often lost. At Dwaraka Collections, we bridge this gap. Every single thread tells a story of dedication, hours of meticulous labor, and generational skill passed down through families of master weavers. By completely eliminating middlemen and distributors, we operate on a direct-from-weaver model that ensures fair wages go straight into the hands of the creators, keeping this ancient art form alive and thriving.</p>
+                
+                <div class="highlight-text">
+                    "We do not just sell garments; we deliver pieces of timeless Indian art woven with love, integrity, and absolute perfection."
+                </div>
+
+                <p>Our strictly curated collections feature premium pure fabrics, vibrant long-lasting organic dyes, and exclusive designs that cater to both classic tastes and contemporary styling preferences. We pay extraordinary attention to quality control—inspecting every loom, stitch, and boundary line to meet the highest standards of our global family of customers. When you purchase from Dwaraka Collections, you aren't just updating your wardrobe; you are actively supporting an artisan's livelihood and carrying forward a beautiful legacy.</p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-certificate"></i>
+                    <h4>100% Uncompromised Quality</h4>
+                    <p>Every saree and fabric goes through rigorous multi-level quality assessments to ensure flawless premium threads and rich, authentic textures.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-hands-helping"></i>
+                    <h4>Empouring Local Weavers</h4>
+                    <p>We work directly alongside rural handloom weavers in Andhra Pradesh and across India, ensuring sustainable ethical wages and safe working conditions.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-wallet"></i>
+                    <h4>Honest Transparent Pricing</h4>
+                    <p>By removing retail brand markups and distribution networks, we bring you luxury-grade heirloom fabrics at surprisingly reasonable and affordable prices.</p>
+                </div>
+            </div>
+
+            <div class="action-container">
+                <a href="index.html" class="action-btn">
+                    Explore Our Collections <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h4>Dwaraka Collections</h4>
+                <p>చేనేత వస్త్రాల నమ్మకమైన కేంద్రం. నాణ్యమైన ఉత్పత్తులను నేరుగా మీ ఇంటికే అందిస్తాము.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html#aboutSection">About Us</a></li>
+                    <li><a href="index.html#faqSection">FAQs Portal</a></li>
+                    <li><a href="index.html">Back To Home</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Support</h4>
+                <p><i class="fas fa-envelope"></i> info@dwarakacollections.com</p>
+                <p><i class="fab fa-whatsapp"></i> +91 XXXXXXXXXX</p>
+                <p><i class="fas fa-map-marker-alt"></i> Handloom Street, Andhra Pradesh, India</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dwaraka Collections. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+  </html>
+
