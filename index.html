@@ -95,19 +95,7 @@
          color: var(--dark-brown);
          border-color: white;
         }
-        <button class="menu-btn-small">
-         <span>&#9776; Menu</span>
-       </button>
-       <div class="menu-dropdown">
-         <a href="#about">About</a>
-         <a href="#contact">Contact</a>
-         <a href="#faq">FAQ</a>
-         <a href="#social">Social Links</a>
-         <a href="#login">Login</a>
-       </div>
         
-
-
         /* Stats container with Icons at the bottom of header */
         .header-stats-bar {
             display: flex;
@@ -456,13 +444,16 @@
                 <button class="menu-btn-small" onclick="toggleDropdown(event)">☰ Menu</button>
                 
                 <!-- Expanded Dropdown Links -->
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <button onclick="scrollToSection('aboutSection')">About Us</button>
-                    <button onclick="scrollToSection('contactSection')">Contact Us</button>
-                    <button onclick="scrollToSection('faqSection')">FAQs</button>
-                    <hr style="border-color:#eee; margin:2px 0;">
-                    <button onclick="openLoginModal()" style="color:var(--dark-brown); font-weight:bold;">Admin Login 🔑</button>
-                </div>
+                <button class="menu-btn-small">
+                 <span>&#9776; Menu</span>
+                </button>
+               <div class="menu-dropdown">
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="#faq">FAQ</a>
+                <a href="#social">Social Links</a>
+                <a href="#login">Login</a>
+               </div>
             </div>
 
             <!-- Stats Layer with Official Icons -->
