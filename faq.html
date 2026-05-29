@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - Dwaraka Collections</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-color: #FFFFFF;
+            --dark-brown: #4A2E1B;
+            --light-brown: #5D3A22;
+            --gold: #D4AF37;
+            --soft-cream: #FDFBF7;
+            --text-dark: #333333;
+            --border-color: #E6DFD7;
+        }
+
+        body {
+            background-color: var(--soft-cream);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Top Navigation Bar with Back Arrow */
+        .nav-header {
+            background-color: var(--dark-brown);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-arrow {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: none;
+            border: none;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* FAQ Section Content Styling */
+        .faq-wrapper {
+            padding: 50px 0;
+        }
+
+        .faq-header-block {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .faq-header-block h1 {
+            color: var(--dark-brown);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .faq-header-block p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Accordion Structure */
+        .faq-container {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-top: 6px solid var(--dark-brown);
+        }
+
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 15px;
+            }
+        }
+
+        .faq-row {
+            border-bottom: 1px solid var(--border-color);
+            padding: 18px 0;
+        }
+
+        .faq-row:last-child {
+            border-bottom: none;
+        }
+
+        .faq-trigger {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark-brown);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            transition: color 0.2s;
+        }
+
+        .faq-trigger:hover {
+            color: var(--light-brown);
+        }
+
+        .faq-trigger i {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+            color: #888;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            color: #555555;
+            font-size: 15px;
+            padding-right: 20px;
+        }
+
+        /* JavaScript Toggle Active Status classes */
+        .faq-row.active .faq-trigger i {
+            transform: rotate(180deg);
+            color: var(--dark-brown);
+        }
+
+        .faq-row.active .faq-answer {
+            max-height: 200px; /* Adjust if content is very lengthy */
+            padding-top: 12px;
+        }
+
+        /* Home Page Replica Footer Component */
+        footer {
+            background-color: var(--dark-brown);
+            color: #E6DFD7;
+            padding: 40px 0 20px 0;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col p, .footer-col ul {
+            list-style: none;
+            line-height: 1.8;
+        }
+
+        .footer-col ul li a {
+            color: #E6DFD7;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-header">
+        <div class="container nav-container" style="max-width: 1200px;">
+            <a href="index.html" class="back-arrow" onclick="if(history.length > 1){ event.preventDefault(); history.back(); }">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="page-title">Dwaraka Collections</div>
+        </div>
+    </div>
+
+    <main class="container faq-wrapper">
+        <div class="faq-header-block">
+            <h1>Have Questions? We Have Answers</h1>
+            <p>Everything you need to know about our premium handloom products, custom ordering, and policies.</p>
+        </div>
+
+        <div class="faq-container">
+            
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    1. Are the products sold on Dwaraka Collections 100% authentic handloom?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Yes, absolutely. Every outfit, saree, and fabric in our collection is 100% genuinely hand-woven by experienced rural weavers using traditional loom setups. We take pride in supporting ethical handmade fashion.
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    2. How do I place an order using the "Order Now" feature?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    It is simple! Browse our collections, take a screenshot of your selected product, click on the 'ORDER NOW' button, fill in your details (Name, Contact No, and Delivery Address), upload the screenshot, and hit submit.
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    3. What happens after I submit the order form?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Once you submit your order form along with the screenshot, our team will verify stock availability and contact you directly via WhatsApp/Phone within a few hours to process your payment and finalize shipment.
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    4. What are your standard shipping timelines?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    For orders within Andhra Pradesh and neighboring states, it typically takes 3 to 5 business days. For pan-India domestic shipping, deliveries take around 5 to 7 business days depending on your specific location pin code.
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    5. Do you offer Cash on Delivery (COD) services?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Currently, because we work directly with rural weavers and deal with limited heirloom stock, we operate purely on a secure digital prepaid basis (UPI, Bank Transfer, or GooglePay). This allows us to keep our prices extremely fair.
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    6. How can I track the exact status of my package?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    As soon as your parcel is packed and handed over to our verified courier partner, we will automatically share the tracking link and consignment ID directly to your WhatsApp number so you can track it in real-time.
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    7. What is your return and exchange policy?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    We accept exchanges only in cases of manufacturing defects or incorrect item deliveries. To secure an exchange, we kindly request our clients to record a continuous unboxing video of the parcel from start to finish.
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    8. Why are there sometimes minor irregularities in the fabric patterns?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Slight variations or minor knot textures are the native characteristics of fine authentic hand-loom weaving. These are not flaws; they are proof that the cloth was crafted completely by human hands, adding to its unique charm!
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    9. Can I request custom modifications or bulk orders for special family occasions?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Yes, we do entertain custom color requests or wholesale orders for weddings and events. Please connect directly with our studio via our 'Contact Us' page or drop us a WhatsApp query at least 3-4 weeks in advance.
+                </div>
+            </div>
+
+            <div class="faq-row">
+                <button class="faq-trigger" onclick="toggleAccordion(this)">
+                    10. How should I care for and wash these handloom clothes?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    To maintain the vibrancy and longevity of the pure organic dyes, we highly recommend dry cleaning for the first couple of washes. For subsequent washes, hand wash separately in cold water using mild eco-friendly detergents.
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="margin-top: 80px;">
+        <div class="container footer-grid" style="max-width: 1200px;">
+            <div class="footer-col">
+                <h4>Dwaraka Collections</h4>
+                <p>చేనేత వస్త్రాల నమ్మకమైన కేంద్రం. నాణ్యమైన ఉత్పత్తులను నేరుగా మీ ఇంటికే అందిస్తాము.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html#aboutSection">About Us</a></li>
+                    <li><a href="index.html#faqSection">FAQs Portal</a></li>
+                    <li><a href="index.html">Back To Home</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Support</h4>
+                <p><i class="fas fa-envelope"></i> info@dwarakacollections.com</p>
+                <p><i class="fab fa-whatsapp"></i> +91 XXXXXXXXXX</p>
+                <p><i class="fas fa-map-marker-alt"></i> Handloom Street, Andhra Pradesh, India</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dwaraka Collections. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAccordion(element) {
+            const parentRow = element.parentElement;
+            
+            // Toggle active class on clicked row
+            parentRow.classList.toggle('active');
+            
+            // Close other rows for clean interactive experience
+            const allRows = document.querySelectorAll('.faq-row');
+            allRows.forEach(row => {
+                if (row !== parentRow) {
+                    row.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
