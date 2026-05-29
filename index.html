@@ -441,38 +441,17 @@
         <div class="container" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; flex-grow: 1;">
             <div class="header-top-bar">
                 <div class="brand-title-mini">Dwaraka Collections</div>
-                <div class="menu-container">
-                 <button class="menu-btn-small" onclick="toggleDropdown(event)">
-                   &#9776; Menu
-                </button>
-                <div id="menuDropdown" class="menu-dropdown" style="display: none;">
-                  <a href="#about">About</a>
-                  <a href="#contact">Contact</a>
-                  <a href="#faq">FAQ</a>
-                  <a href="#social">Social Links</a>
-                  <a href="#login">Login</a>
+                <div>
+                 <button class="menu-btn-small" onclick="toggleDropdown(event)">&#9776; Menu</button>
+                 <div class="menu-dropdown" id="myDropdown" style="display: none;">
+                   <a href="#about">About</a>
+                   <a href="#contact">Contact</a>
+                   <a href="#faq">FAQ</a>
+                   <a href="#social">Social Links</a>
+                   <a href="#login">Login</a>
+                 </div>
                 </div>
-            </div>
-<script>
-function toggleDropdown(event) {
-    event.stopPropagation();
-    const dropdown = document.getElementById('menuDropdown');
-    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-        dropdown.style.display = 'block';
-    } else {
-        dropdown.style.display = 'none';
-    }
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-    const dropdown = document.getElementById('menuDropdown');
-    if (dropdown && dropdown.style.display === 'block') {
-        dropdown.style.display = 'none';
-    }
-}
-</script>
-
+                
 
             </div>
 
