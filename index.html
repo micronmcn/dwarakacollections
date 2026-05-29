@@ -510,25 +510,34 @@
 <body>
 
     <div class="menu-overlay" id="menuOverlay" onclick="closeSideMenu()"></div>
-
-    <div class="side-menu" id="sideMenu">
-        <button class="side-menu-close" onclick="closeSideMenu()">&times;</button>
-        <div class="side-menu-links">
-            <a onclick="scrollToSection('about.html')">About Us</a>
-            <a onclick="scrollToSection('contactSection')">Contact Us</a>
-            <a onclick="scrollToSection('faqSection')">FAQ</a>
-            <a onclick="alert('Privacy & Policy Page Coming Soon!')">Privacy & Policy</a>
-            <button onclick="openLoginModal()" style="color: var(--dark-brown);">Login 🔑</button>
+     <div class="side-menu" id="sideMenu">
+      <button class="side-menu-close" onclick="closeSideMenu()">&times;</button>
+         <div class="side-menu-links">
+             <a href="about.html">About Us</a>
+             <a href="contact.html" onclick="closeSideMenu()">Contact Us</a>
+             <a href="#faqSection" onclick="closeSideMenu()">FAQ</a>
+             <a href="privacy-policy.html">Privacy & Policy</a>
+             <button onclick="openLoginModal()" 
+              style="color: var(--dark-brown);">Login 🔑
+             </button>
         </div>
-        <div class="side-menu-socials">
-            <h5>Follow Us</h5>
-            <div class="social-icons-row">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-            </div>
+         <div class="side-menu-socials">
+             <h5>Follow Us</h5>
+             <div class="social-icons-row">
+                 <a href="https://instagram.com/yourpage" target="_blank">
+                     <i class="fab fa-instagram"></i>
+                 </a>
+                 <a href="https://wa.me/919876543210" target="_blank">
+                     <i class="fab fa-whatsapp"></i>
+                 </a>
+                 <a href="https://facebook.com/yourpage" target="_blank">
+                     <i class="fab fa-facebook"></i>
+                 </a>
+
         </div>
     </div>
+
+</div>
 
     <header>
         <div class="container" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; flex-grow: 1;">
