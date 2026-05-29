@@ -79,23 +79,19 @@
         }
 
         /* Small Corner Menu Button */
-        .menu-btn-small {
-         background: rgba(0, 0, 0, 0.5);
-         color: white;
-         border: 1px solid rgba(255, 255, 255, 0.6);
-         padding: 6px 12px;
-         font-size: 13px;
-         font-weight: 600;
-         cursor: pointer;
-         border-radius: 4px;
-         transition: all 0.3s ease;
-        }
-        .menu-btn-small:hover {
-         background-color: white;
-         color: var(--dark-brown);
-         border-color: white;
-        }
-        
+        <div class="menu-container">
+         <button class="menu-btn-small" onclick="toggleDropdown()">&#8942;</button>
+  
+         <div id="myDropdown" class="dropdown-content">
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a href="#faq">FAQ</a>
+          <a href="#social">Social Media</a>
+          <a href="#login">Login</a>
+         </div>
+        </div>
+
+
         /* Stats container with Icons at the bottom of header */
         .header-stats-bar {
             display: flex;
@@ -444,16 +440,13 @@
                 <button class="menu-btn-small" onclick="toggleDropdown(event)">☰ Menu</button>
                 
                 <!-- Expanded Dropdown Links -->
-                <button class="menu-btn-small">
-                 <span>&#9776; Menu</span>
-                </button>
-               <div class="menu-dropdown">
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-                <a href="#faq">FAQ</a>
-                <a href="#social">Social Links</a>
-                <a href="#login">Login</a>
-               </div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <button onclick="scrollToSection('aboutSection')">About Us</button>
+                    <button onclick="scrollToSection('contactSection')">Contact Us</button>
+                    <button onclick="scrollToSection('faqSection')">FAQs</button>
+                    <hr style="border-color:#eee; margin:2px 0;">
+                    <button onclick="openLoginModal()" style="color:var(--dark-brown); font-weight:bold;">Admin Login 🔑</button>
+                </div>
             </div>
 
             <!-- Stats Layer with Official Icons -->
