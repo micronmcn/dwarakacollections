@@ -29,9 +29,7 @@
             min-height: 100vh;
         }
 
-        /* ------------------------------------- */
-        /* 🔒 Login Screen Overlay Styling */
-        /* ------------------------------------- */
+        /* 🔒 Login Screen Overlay */
         #loginOverlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -53,83 +51,18 @@
             text-align: center;
         }
 
-        .login-card h2 {
-            color: var(--dark-brown);
-            margin-bottom: 8px;
-            font-size: 24px;
-        }
+        .login-card h2 { color: var(--dark-brown); margin-bottom: 8px; font-size: 24px; }
+        .login-card p { color: #777; font-size: 14px; margin-bottom: 25px; }
+        .login-field { position: relative; margin-bottom: 20px; text-align: left; }
+        .login-field label { display: block; font-size: 13px; font-weight: 600; color: var(--dark-brown); margin-bottom: 6px; }
+        .login-field input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 15px; outline: none; }
+        .login-field input:focus { border-color: var(--dark-brown); }
+        .login-field i { position: absolute; left: 15px; top: 38px; color: #888; }
+        .login-btn { width: 100%; background: var(--dark-brown); color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 10px; }
+        .login-btn:hover { background: var(--light-brown); }
+        .error-msg { color: #d63031; font-size: 13px; margin-top: 12px; display: none; font-weight: 600; }
 
-        .login-card p {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .login-field {
-            position: relative;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .login-field label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--dark-brown);
-            margin-bottom: 6px;
-        }
-
-        .login-field input {
-            width: 100%;
-            padding: 12px 12px 12px 40px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .login-field input:focus {
-            border-color: var(--dark-brown);
-        }
-
-        .login-field i {
-            position: absolute;
-            left: 15px;
-            top: 38px;
-            color: #888;
-        }
-
-        .login-btn {
-            width: 100%;
-            background: var(--dark-brown);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 10px;
-        }
-
-        .login-btn:hover {
-            background: var(--light-brown);
-        }
-
-        .error-msg {
-            color: #d63031;
-            font-size: 13px;
-            margin-top: 12px;
-            display: none;
-            font-weight: 600;
-        }
-
-        /* ------------------------------------- */
         /* 📊 Main Dashboard Area Layout */
-        /* ------------------------------------- */
         #mainDashboard {
             display: none; /* Hidden until login success */
         }
@@ -192,6 +125,7 @@
         .card-info p { font-size: 14px; color: #666; font-weight: 600; }
         .card-icon { font-size: 30px; color: #ddd; }
 
+        /* Controls Panel Grid with New Buttons */
         .controls-panel {
             background: white;
             padding: 20px;
@@ -204,13 +138,38 @@
             gap: 15px;
         }
 
-        .search-box { position: relative; flex: 1; min-width: 280px; }
+        .search-box { position: relative; flex: 2; min-width: 280px; }
         .search-box input { width: 100%; padding: 12px 15px 12px 40px; border: 1px solid var(--border-color); border-radius: 6px; outline: none; }
         .search-box i { position: absolute; left: 15px; top: 15px; color: #888; }
+
+        .action-buttons-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
 
         .filter-group { display: flex; gap: 10px; }
         .filter-btn { padding: 10px 18px; border: 1px solid var(--border-color); background: white; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; color: #555; }
         .filter-btn.active { background: var(--dark-brown); color: white; border-color: var(--dark-brown); }
+
+        /* Custom Action Buttons */
+        .btn-revenue { background-color: #2c3e50; color: white; border: none; }
+        .btn-revenue:hover { background-color: #34495e; }
+        .btn-print-sheet { background-color: #16a085; color: white; border: none; }
+        .btn-print-sheet:hover { background-color: #1abc9c; }
+
+        /* Interactive Select Dropdown for Status */
+        .status-select {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            border: 1px solid var(--border-color);
+        }
+        .status-select.pending { background-color: #ffeaa7; color: #d63031; }
+        .status-select.completed { background-color: #dff9fb; color: var(--success-green); }
 
         .table-responsive {
             background: white;
@@ -225,28 +184,32 @@
         td { padding: 15px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
         tr:hover { background-color: #faf8f5; }
 
-        .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; display: inline-block; }
-        .status-badge.pending { background: #ffeaa7; color: #d63031; }
-        .status-badge.delivered { background: #dff9fb; color: var(--success-green); }
-
         .btn-action { background: none; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; color: var(--dark-brown); text-decoration: none; }
         .btn-action:hover { background: var(--soft-cream); border-color: var(--dark-brown); }
         .btn-whatsapp { background-color: #25D366; color: white; border: none; }
         .btn-whatsapp:hover { background-color: #20ba5a; }
         .address-text { display: block; font-size: 13px; color: #555; max-width: 200px; white-space: pre-line; }
 
-        /* Screenshot Modal */
+        /* Modals Common Design */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: all 0.3s ease; }
         .modal.open { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; padding: 20px; border-radius: 10px; max-width: 450px; width: 90%; position: relative; text-align: center; }
-        .modal-content img { width: 100%; height: auto; border-radius: 6px; margin-top: 15px; }
+        .modal-content { background: white; padding: 25px; border-radius: 10px; max-width: 500px; width: 90%; position: relative; }
         .close-modal { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; }
 
+        /* Revenue Report Table inside Popup */
+        .revenue-table { width: 100%; margin-top: 15px; font-size: 14px; }
+        .revenue-table td { padding: 10px; border-bottom: 1px solid #eee; }
+        .revenue-high { font-size: 20px; color: var(--success-green); font-weight: 700; }
+
+        /* Print Layout Rules */
         #printSection { display: none; }
         @media print {
             body * { display: none; }
             #printSection, #printSection * { display: block !important; }
-            #printSection { position: absolute; left: 0; top: 0; padding: 30px; border: 2px dashed #333; font-family: monospace; }
+            #printSection { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #333; padding: 10px; text-align: left; }
+            .btn-action, .status-select, .live-badge { display: none !important; }
         }
     </style>
 </head>
@@ -275,7 +238,6 @@
         </div>
     </div>
 
-
     <div id="mainDashboard">
         <div class="admin-header">
             <div class="header-title">
@@ -296,7 +258,7 @@
                 </div>
                 <div class="analytics-card pending">
                     <div class="card-info">
-                        <h3>2</h3>
+                        <h3 id="pendingCounter">2</h3>
                         <p>Pending Dispatch</p>
                     </div>
                     <div class="card-icon"><i class="fas fa-clock"></i></div>
@@ -313,16 +275,26 @@
             <div class="controls-panel">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="adminSearchInput" onkeyup="filterOrdersBySearch()" placeholder="Search by Customer Name, Phone, or Location...">
+                    <input type="text" id="adminSearchInput" onkeyup="filterOrdersBySearch()" placeholder="Search by Name, Phone, or Location...">
                 </div>
+                
+                <div class="action-buttons-group">
+                    <button class="btn-action btn-revenue" onclick="openRevenueModal()">
+                        <i class="fas fa-chart-line"></i> View Revenue Report
+                    </button>
+                    <button class="btn-action btn-print-sheet" onclick="printFullSheet()">
+                        <i class="fas fa-print"></i> Print Full Sheet
+                    </button>
+                </div>
+
                 <div class="filter-group">
                     <button class="filter-btn active" onclick="filterStatus('all', this)">All Orders</button>
-                    <button class="filter-btn" onclick="filterStatus('pending', this)">Pending Only</button>
-                    <button class="filter-btn" onclick="filterStatus('delivered', this)">Delivered</button>
+                    <button class="filter-btn" onclick="filterStatus('pending', this)">Pending</button>
+                    <button class="filter-btn" onclick="filterStatus('completed', this)">Completed</button>
                 </div>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive" id="mainTableSection">
                 <table>
                     <thead>
                         <tr>
@@ -347,10 +319,15 @@
                                     <i class="fas fa-image"></i> View Saree Pic
                                 </button>
                             </td>
-                            <td><span class="status-badge pending">Pending</span></td>
+                            <td>
+                                <select class="status-select pending" onchange="updateOrderStatus(this)">
+                                    <option value="pending" selected>Pending</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </td>
                             <td>
                                 <div style="display: flex; gap: 8px;">
-                                    <a href="https://wa.me/919876543210?text=Hi%20Kiran,%20your%20Dwaraka%20Collections%20order%20%231042%20is%20confirmed!" target="_blank" class="btn-action btn-whatsapp">
+                                    <a href="https://wa.me/919876543210?text=Hi%20Kiran,%20your%20order%20%231042%20is%20confirmed!" target="_blank" class="btn-action btn-whatsapp">
                                         <i class="fab fa-whatsapp"></i> Chat
                                     </a>
                                     <button class="btn-action" onclick="printAddressSlip('addr_1042', '#DWARAKA-1042')">
@@ -367,11 +344,37 @@
                             </td>
                             <td><span class="address-text" id="addr_1041">Srinivas Rao, Flat 302, Lakshmi Apartments, Proddatur, Kadapa Dist, AP - 516360</span></td>
                             <td><button class="btn-action" onclick="openScreenshotModal('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80', '#DWARAKA-1041')"><i class="fas fa-image"></i> View Saree Pic</button></td>
-                            <td><span class="status-badge pending">Pending</span></td>
+                            <td>
+                                <select class="status-select pending" onchange="updateOrderStatus(this)">
+                                    <option value="pending" selected>Pending</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </td>
                             <td>
                                 <div style="display: flex; gap: 8px;">
                                     <a href="https://wa.me/918123456789?text=Hi%20Srinivas,%20order%20confirmed." target="_blank" class="btn-action btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat</a>
                                     <button class="btn-action" onclick="printAddressSlip('addr_1041', '#DWARAKA-1041')"><i class="fas fa-print"></i> Print</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="order-row" data-status="completed">
+                            <td><strong>#DWARAKA-1040</strong></td>
+                            <td>
+                                <span style="font-weight: 600; display:block;">Ravali Priya</span>
+                                <span style="font-size: 12px; color: #666;">+91 7013000000</span>
+                            </td>
+                            <td><span class="address-text" id="addr_1040">Ravali Priya, H-No: 12-3-45, Near Ramalayam Temple, Dhone, Kurnool, AP - 518222</span></td>
+                            <td><button class="btn-action" onclick="openScreenshotModal('https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80', '#DWARAKA-1040')"><i class="fas fa-image"></i> View Saree Pic</button></td>
+                            <td>
+                                <select class="status-select completed" onchange="updateOrderStatus(this)">
+                                    <option value="pending">Pending</option>
+                                    <option value="completed" selected>Completed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    <a href="https://wa.me/917013000000" target="_blank" class="btn-action btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat</a>
+                                    <button class="btn-action" onclick="printAddressSlip('addr_1040', '#DWARAKA-1040')"><i class="fas fa-print"></i> Print</button>
                                 </div>
                             </td>
                         </tr>
@@ -382,52 +385,105 @@
     </div>
 
     <div id="printSection"></div>
+
     <div class="modal" id="screenshotModal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-modal" onclick="closeModal('screenshotModal')">&times;</span>
+            <h4 id="modalOrderTitle" style="color: var(--dark-brown);">Order Screenshot Preview</h4>
+            <img id="modalImageContainer" src="" style="width:100%; border-radius:6px; margin-top:15px;">
+        </div>
+    </div>
+
+    <div class="modal" id="revenueModal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h4 id="modalOrderTitle">Order Screenshot Preview</h4>
-            <img id="modalImageContainer" src="">
+            <span class="close-modal" onclick="closeModal('revenueModal')">&times;</span>
+            <h3 style="color: var(--dark-brown); margin-bottom: 5px;"><i class="fas fa-wallet"></i> Revenue Analytics</h3>
+            <p style="font-size: 12px; color: #888;">Live business insights for Dwaraka Collections</p>
+            
+            <table class="revenue-table">
+                <tr>
+                    <td><strong>Total Sales Traffic:</strong></td>
+                    <td>3 Orders Total</td>
+                </tr>
+                <tr>
+                    <td><strong>Completed Sales:</strong></td>
+                    <td>1 Saree Dispatched</td>
+                </tr>
+                <tr>
+                    <td><strong>Pending Sales Value:</strong></td>
+                    <td>₹7,250 (In Progress)</td>
+                </tr>
+                <tr style="background-color: var(--soft-cream);">
+                    <td><strong style="color:var(--success-green)">Net Earned Revenue:</strong></td>
+                    <td><span class="revenue-high">₹4,200</span></td>
+                </tr>
+            </table>
         </div>
     </div>
 
     <script>
-        // JavaScript Login Verification
+        // 🔑 Login handler
         function verifyAdminLogin(event) {
-            event.preventDefault(); // Stop page refresh
-            
+            event.preventDefault();
             const userBox = document.getElementById('username').value;
             const passBox = document.getElementById('password').value;
-            const errorLabel = document.getElementById('loginError');
-
-            // 🔑 SECRET CREDENTIALS CHECK
             if (userBox === 'admin' && passBox === 'dwaraka2026') {
-                // Hide Login box and Show Main Control Room Dashboard
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainDashboard').style.display = 'block';
             } else {
-                // Show Error Message
-                errorLabel.style.display = 'block';
+                document.getElementById('loginError').style.display = 'block';
             }
         }
 
-        function logoutAdmin() {
-            // Simple session logout simulation
-            location.reload();
+        function logoutAdmin() { location.reload(); }
+
+        // 🔄 Status Dropdown Change Handler
+        function updateOrderStatus(selectElement) {
+            const row = selectElement.closest('.order-row');
+            const newStatus = selectElement.value;
+            
+            // 1. Update status data attribute for filters
+            row.setAttribute('data-status', newStatus);
+            
+            // 2. Change style classes dynamically
+            if(newStatus === 'completed') {
+                selectElement.className = "status-select completed";
+            } else {
+                selectElement.className = "status-select pending";
+            }
+
+            // 3. Recalculate Pending Counter live
+            recalculatePendingCount();
         }
 
-        // Previous functions for Dashboard features
+        function recalculatePendingCount() {
+            const pendingRows = document.querySelectorAll('.order-row[data-status="pending"]').length;
+            document.getElementById('pendingCounter').innerText = pendingRows;
+        }
+
+        // 📊 Open/Close Modals
         function openScreenshotModal(imageUrl, orderId) {
             document.getElementById('modalOrderTitle').innerText = "Screenshot for Order " + orderId;
             document.getElementById('modalImageContainer').src = imageUrl;
             document.getElementById('screenshotModal').classList.add('open');
         }
-        function closeModal() { document.getElementById('screenshotModal').classList.remove('open'); }
+
+        function openRevenueModal() {
+            document.getElementById('revenueModal').classList.add('open');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('open');
+        }
+
+        // 🔍 Search and Filters Logic
         function filterOrdersBySearch() {
             const input = document.getElementById('adminSearchInput').value.toLowerCase();
             document.querySelectorAll('.order-row').forEach(row => {
                 row.style.display = row.innerText.toLowerCase().includes(input) ? "" : "none";
             });
         }
+
         function filterStatus(status, btn) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -435,9 +491,18 @@
                 row.style.display = (status === 'all' || row.getAttribute('data-status') === status) ? "" : "none";
             });
         }
+
+        // 🖨️ Printing Units
         function printAddressSlip(elemId, orderId) {
             const txt = document.getElementById(elemId).innerText;
-            document.getElementById('printSection').innerHTML = `<b>DWARAKA COLLECTIONS - COURIER SLIP</b><br><br><b>ORDER: ${orderId}</b><br><br>${txt}`;
+            document.getElementById('printSection').innerHTML = `<h3>DWARAKA COLLECTIONS - COURIER SLIP</h3><br><b>ORDER: ${orderId}</b><br><br>${txt}`;
+            window.print();
+        }
+
+        function printFullSheet() {
+            // Take markup from active viewing table grid
+            const tableContent = document.getElementById('mainTableSection').innerHTML;
+            document.getElementById('printSection').innerHTML = `<h2>DWARAKA COLLECTIONS - MASTER ORDERS SHEET</h2><br>` + tableContent;
             window.print();
         }
     </script>
