@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy & Terms - Dwaraka Collections</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-color: #FFFFFF;
+            --dark-brown: #4A2E1B;
+            --light-brown: #5D3A22;
+            --gold: #D4AF37;
+            --soft-cream: #FDFBF7;
+            --text-dark: #333333;
+            --border-color: #E6DFD7;
+        }
+
+        body {
+            background-color: var(--soft-cream);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Top Navigation Bar with Back Arrow */
+        .nav-header {
+            background-color: var(--dark-brown);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-arrow {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: none;
+            border: none;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Layout Wrapper */
+        .legal-wrapper {
+            padding: 40px 0;
+        }
+
+        /* Tabs Styling */
+        .tabs-container {
+            display: flex;
+            background: #e9e2d9;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--light-brown);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: var(--dark-brown);
+            border-top: 4px solid var(--dark-brown);
+        }
+
+        /* Main Card Container */
+        .legal-content-card {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            border-top: none;
+        }
+
+        @media (max-width: 768px) {
+            .legal-content-card {
+                padding: 25px 15px;
+            }
+            .tab-btn {
+                font-size: 14px;
+                padding: 12px 5px;
+            }
+        }
+
+        /* Typography Inside Content */
+        .legal-pane h2 {
+            color: var(--dark-brown);
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .update-date {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .legal-pane h3 {
+            color: var(--light-brown);
+            font-size: 18px;
+            margin: 25px 0 10px 0;
+            font-weight: 600;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        .legal-pane p {
+            color: #444444;
+            font-size: 15px;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .legal-pane ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            color: #444444;
+            font-size: 15px;
+        }
+
+        .legal-pane ul li {
+            margin-bottom: 8px;
+        }
+
+        .legal-pane ol {
+            padding-left: 20px;
+            color: #444444;
+            font-size: 15px;
+        }
+
+        .legal-pane ol li {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+
+        .legal-pane ol li p {
+            font-weight: 400;
+            color: #444444;
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+
+        /* Notice Block */
+        .notice-block {
+            background-color: var(--soft-cream);
+            border-left: 4px solid var(--dark-brown);
+            padding: 20px;
+            margin-top: 35px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .notice-block h4 {
+            color: var(--dark-brown);
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .notice-block p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Full Replica Footer Component */
+        footer {
+            background-color: var(--dark-brown);
+            color: #E6DFD7;
+            padding: 40px 0 20px 0;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col p, .footer-col ul {
+            list-style: none;
+            line-height: 1.8;
+        }
+
+        .footer-col ul li a {
+            color: #E6DFD7;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-header">
+        <div class="container nav-container" style="max-width: 1200px;">
+            <a href="index.html" class="back-arrow" onclick="if(history.length > 1){ event.preventDefault(); history.back(); }">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="page-title">Dwaraka Collections</div>
+        </div>
+    </div>
+
+    <main class="container legal-wrapper">
+        
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab(event, 'privacyPane')">Privacy Policy</button>
+            <button class="tab-btn" onclick="switchTab(event, 'termsPane')">Terms & Conditions</button>
+        </div>
+
+        <div class="legal-content-card">
+            
+            <div id="privacyPane" class="legal-pane">
+                <h2>Privacy Policy</h2>
+                <div class="update-date">Last Updated: May 2026</div>
+                
+                <p>At Dwarka Collections, we value your privacy and are committed to protecting your personal information. This policy explains what information we collect and how we utilize it to serve you better.</p>
+                
+                <h3>Information We Collect</h3>
+                <p>To process your orders and handle seamless logistics, we gather the following basic details:</p>
+                <ul>
+                    <li>Name</li>
+                    <li>Mobile Number</li>
+                    <li>Delivery Address</li>
+                    <li>Email Address (if explicitly provided)</li>
+                    <li>Order Details & Screenshot References</li>
+                </ul>
+
+                <h3>How We Use Your Information</h3>
+                <p>The information collected is strictly utilized for core operational procedures, including to:</p>
+                <ul>
+                    <li>Process, verify, and confirm your incoming orders.</li>
+                    <li>Deliver products safely through our courier networks.</li>
+                    <li>Provide reliable post-purchase customer support.</li>
+                    <li>Share structural order updates and occasional promotional offers.</li>
+                </ul>
+
+                <h3>Information Security</h3>
+                <p>Your personal information is kept entirely secure. We maintain strict safeguards, and your data is **never sold, leased, or shared** with third-party tracking corporations. Information is exclusively revealed to registered courier fulfillment groups solely to handle physical parcel delivery services.</p>
+
+                <h3>Cookies</h3>
+                <p>Our website may deploy standard browser cookies to track general performance parameters, analyze traffic metrics, and improve overall website responsiveness and user experience.</p>
+
+                <h3>Customer Rights</h3>
+                <p>You retain the absolute right to control your information. You may contact our operations team at any time to update your personal records, request immediate corrections of inaccurate details, or ask any critical questions regarding your digital privacy.</p>
+
+                <h3>Contact Us</h3>
+                <p>For any privacy-related issues or data queries, kindly connect with us at:</p>
+                <p style="font-weight: 600; color: var(--dark-brown); margin-bottom: 5px;">Dwarka Collections</p>
+                <p><i class="fab fa-whatsapp"></i> WhatsApp: +91 XXXXX XXXXX</p>
+                <p><i class="fas fa-envelope"></i> Email: support@dwarakacollections.in</p>
+            </div>
+
+
+            <div id="termsPane" class="legal-pane hidden">
+                <h2>Terms & Conditions</h2>
+                <div class="update-date">Last Updated: May 2026</div>
+
+                <ol>
+                    <li>
+                        Product Information
+                        <p>We make every honest effort to display handloom product colors, thread details, and designs as accurately as possible. However, slight natural color variations may occur due to photographic lighting equipment, studio settings, or individual smartphone screen profiles.</p>
+                    </li>
+                    <li>
+                        Order Confirmation
+                        <p>All incoming order inquiries are processed and queued for courier packaging only after formal receipt and verification of digital payment confirmation.</p>
+                    </li>
+                    <li>
+                        Shipping & Delivery
+                        <p>Delivery timeframes may vary depending upon your specific geographical location and district pin code. Orders are generally delivered within 5–7 working days. Please note that shipping timelines are estimates and can occasionally be affected by external operational delays or public holidays.</p>
+                    </li>
+                    <li>
+                        Pricing
+                        <p>All prices displayed across our collection streams on the website are final at the time of purchase but remain subject to changes or updates without prior notice depending on loom material expenses.</p>
+                    </li>
+                    <li>
+                        Cancellation Policy
+                        <p>Due to the exclusive and limited production scale of authentic handloom products, orders cannot be cancelled or modified once they have been formally dispatched from our warehouse facility.</p>
+                    </li>
+                    <li>
+                        Return & Exchange
+                        <p>Returns or exchanges are strictly accepted **only** for verified damaged, defective, or incorrect product shipments. Customers must report such issues within 48 hours of delivery along with an unedited unboxing video or clear photos.</p>
+                    </li>
+                    <li>
+                        No Cash on Delivery
+                        <p>Currently, to maintain transparency and fund artisan weavers directly, Cash on Delivery (COD) service is not available unless specifically mentioned otherwise during promotional events.</p>
+                    </li>
+                    <li>
+                        Intellectual Property
+                        <p>All original website content, custom photography, product descriptions, logos, graphics, and unique layout designs belong explicitly to Dwarka Collections and may not be copied, mirrored, or reused without written consent.</p>
+                    </li>
+                    <li>
+                        Limitation of Liability
+                        <p>Dwarka Collections shall not be held liable or responsible for accidental delivery delays, package damage caused by independent courier services, natural disasters, or any unavoidable circumstances beyond our direct control.</p>
+                    </li>
+                    <li>
+                        Contact Information
+                        <p>For support and order-related queries, reach out directly to:</p>
+                        <p style="font-weight: 600; color: var(--dark-brown); margin-bottom: 5px; margin-top: 5px;">Dwarka Collections</p>
+                        <p><i class="fab fa-whatsapp"></i> WhatsApp: +91 XXXXX XXXXX</p>
+                        <p><i class="fas fa-envelope"></i> Email: support@dwarakacollections.in</p>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="notice-block">
+                <h4>Customer Notice</h4>
+                <p>Dwarka Collections operates as an online fashion and saree store. By placing an order through our website, WhatsApp, Instagram, or other social media platforms, you explicitly agree to our outlined Privacy Policy and Terms & Conditions.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-grid" style="max-width: 1200px;">
+            <div class="footer-col">
+                <h4>Dwaraka Collections</h4>
+                <p>చేనేత వస్త్రాల నమ్మకమైన కేంద్రం. నాణ్యమైన ఉత్పత్తులను నేరుగా మీ ఇంటికే అందిస్తాము.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html#aboutSection">About Us</a></li>
+                    <li><a href="index.html#faqSection">FAQs Portal</a></li>
+                    <li><a href="index.html">Back To Home</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Support</h4>
+                <p><i class="fas fa-envelope"></i> info@dwarakacollections.com</p>
+                <p><i class="fab fa-whatsapp"></i> +91 XXXXXXXXXX</p>
+                <p><i class="fas fa-map-marker-alt"></i> Handloom Street, Andhra Pradesh, India</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dwaraka Collections. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(event, paneId) {
+            // Hide all panes
+            const panes = document.querySelectorAll('.legal-pane');
+            panes.forEach(pane => pane.classList.add('hidden'));
+
+            // Remove active status from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected pane and active tab button
+            document.getElementById(paneId).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
+
