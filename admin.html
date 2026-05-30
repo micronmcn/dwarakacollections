@@ -207,6 +207,9 @@
             body * { display: none; }
             #printSection, #printSection * { display: block !important; }
             #printSection { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #333; padding: 10px; text-align: left; }
+            .btn-action, .status-select, .live-badge { display: none !important; }
         }
     </style>
 </head>
@@ -279,8 +282,8 @@
                     <button class="btn-action btn-revenue" onclick="openRevenueModal()">
                         <i class="fas fa-chart-line"></i> View Revenue Report
                     </button>
-                    <button class="btn-action btn-export-sheet" onclick="exportTableToExcel()">
-                        <i class="fas fa-file-excel"></i> Export Sheet (.csv)
+                    <button class="btn-action btn-export-sheet" onclick="exportTableToCSV('Dwaraka_Orders_Sheet.csv')">
+                        <i class="fas fa-file-excel"></i> Export Sheet
                     </button>
                 </div>
 
@@ -298,18 +301,24 @@
                             <th>Order ID</th>
                             <th>Customer Details</th>
                             <th>Delivery Address</th>
+                            <th>Screenshot Reference</th>
                             <th>Current Status</th>
                             <th>Required Actions</th>
                         </tr>
                     </thead>
                     <tbody id="ordersTableBody">
                         <tr class="order-row" data-status="pending">
-                            <td class="col-id"><strong>#DWARAKA-1042</strong></td>
-                            <td class="col-cust">
-                                <span style="font-weight: 600; display:block;">Kiran G.</span>
-                                <span style="font-size: 12px; color: #666;">+91 9876543210</span>
+                            <td><strong>#DWARAKA-1042</strong></td>
+                            <td>
+                                <span class="cust-name" style="font-weight: 600; display:block;">Kiran G.</span>
+                                <span class="cust-phone" style="font-size: 12px; color: #666;">+91 9876543210</span>
                             </td>
-                            <td class="col-addr"><span class="address-text" id="addr_1042">Kiran G, D-No: 4-12, Handloom Colony, Mangalagiri, Guntur, AP - 522503</span></td>
+                            <td><span class="address-text" id="addr_1042">Kiran G, D-No: 4-12, Handloom Colony, Mangalagiri, Guntur, AP - 522503</span></td>
+                            <td>
+                                <button class="btn-action" onclick="openScreenshotModal('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80', '#DWARAKA-1042')">
+                                    <i class="fas fa-image"></i> View Saree Pic
+                                </button>
+                            </td>
                             <td>
                                 <select class="status-select pending" onchange="updateOrderStatus(this)">
                                     <option value="pending" selected>Pending</option>
@@ -318,19 +327,23 @@
                             </td>
                             <td>
                                 <div style="display: flex; gap: 8px;">
-                                    <button class="btn-action" onclick="openScreenshotModal('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80', '#DWARAKA-1042')"><i class="fas fa-image"></i> Pic</button>
-                                    <a href="https://wa.me/919876543210?text=Hi%20Kiran,%20your%20order%20%231042%20is%20confirmed!" target="_blank" class="btn-action btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat</a>
-                                    <button class="btn-action" onclick="printAddressSlip('addr_1042', '#DWARAKA-1042')"><i class="fas fa-print"></i> Slip</button>
+                                    <a href="https://wa.me/919876543210?text=Hi%20Kiran,%20your%20order%20%231042%20is%20confirmed!" target="_blank" class="btn-action btn-whatsapp">
+                                        <i class="fab fa-whatsapp"></i> Chat
+                                    </a>
+                                    <button class="btn-action" onclick="printAddressSlip('addr_1042', '#DWARAKA-1042')">
+                                        <i class="fas fa-print"></i> Print
+                                    </button>
                                 </div>
                             </td>
                         </tr>
                         <tr class="order-row" data-status="pending">
-                            <td class="col-id"><strong>#DWARAKA-1041</strong></td>
-                            <td class="col-cust">
-                                <span style="font-weight: 600; display:block;">Srinivas Rao</span>
-                                <span style="font-size: 12px; color: #666;">+91 8123456789</span>
+                            <td><strong>#DWARAKA-1041</strong></td>
+                            <td>
+                                <span class="cust-name" style="font-weight: 600; display:block;">Srinivas Rao</span>
+                                <span class="cust-phone" style="font-size: 12px; color: #666;">+91 8123456789</span>
                             </td>
-                            <td class="col-addr"><span class="address-text" id="addr_1041">Srinivas Rao, Flat 302, Lakshmi Apartments, Proddatur, Kadapa Dist, AP - 516360</span></td>
+                            <td><span class="address-text" id="addr_1041">Srinivas Rao, Flat 302, Lakshmi Apartments, Proddatur, Kadapa Dist, AP - 516360</span></td>
+                            <td><button class="btn-action" onclick="openScreenshotModal('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80', '#DWARAKA-1041')"><i class="fas fa-image"></i> View Saree Pic</button></td>
                             <td>
                                 <select class="status-select pending" onchange="updateOrderStatus(this)">
                                     <option value="pending" selected>Pending</option>
@@ -339,19 +352,19 @@
                             </td>
                             <td>
                                 <div style="display: flex; gap: 8px;">
-                                    <button class="btn-action" onclick="openScreenshotModal('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80', '#DWARAKA-1041')"><i class="fas fa-image"></i> Pic</button>
                                     <a href="https://wa.me/918123456789?text=Hi%20Srinivas,%20order%20confirmed." target="_blank" class="btn-action btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat</a>
-                                    <button class="btn-action" onclick="printAddressSlip('addr_1041', '#DWARAKA-1041')"><i class="fas fa-print"></i> Slip</button>
+                                    <button class="btn-action" onclick="printAddressSlip('addr_1041', '#DWARAKA-1041')"><i class="fas fa-print"></i> Print</button>
                                 </div>
                             </td>
                         </tr>
                         <tr class="order-row" data-status="completed">
-                            <td class="col-id"><strong>#DWARAKA-1040</strong></td>
-                            <td class="col-cust">
-                                <span style="font-weight: 600; display:block;">Ravali Priya</span>
-                                <span style="font-size: 12px; color: #666;">+91 7013000000</span>
+                            <td><strong>#DWARAKA-1040</strong></td>
+                            <td>
+                                <span class="cust-name" style="font-weight: 600; display:block;">Ravali Priya</span>
+                                <span class="cust-phone" style="font-size: 12px; color: #666;">+91 7013000000</span>
                             </td>
-                            <td class="col-addr"><span class="address-text" id="addr_1040">Ravali Priya, H-No: 12-3-45, Near Ramalayam Temple, Dhone, Kurnool, AP - 518222</span></td>
+                            <td><span class="address-text" id="addr_1040">Ravali Priya, H-No: 12-3-45, Near Ramalayam Temple, Dhone, Kurnool, AP - 518222</span></td>
+                            <td><button class="btn-action" onclick="openScreenshotModal('https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80', '#DWARAKA-1040')"><i class="fas fa-image"></i> View Saree Pic</button></td>
                             <td>
                                 <select class="status-select completed" onchange="updateOrderStatus(this)">
                                     <option value="pending">Pending</option>
@@ -360,9 +373,8 @@
                             </td>
                             <td>
                                 <div style="display: flex; gap: 8px;">
-                                    <button class="btn-action" onclick="openScreenshotModal('https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80', '#DWARAKA-1040')"><i class="fas fa-image"></i> Pic</button>
                                     <a href="https://wa.me/917013000000" target="_blank" class="btn-action btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat</a>
-                                    <button class="btn-action" onclick="printAddressSlip('addr_1040', '#DWARAKA-1040')"><i class="fas fa-print"></i> Slip</button>
+                                    <button class="btn-action" onclick="printAddressSlip('addr_1040', '#DWARAKA-1040')"><i class="fas fa-print"></i> Print</button>
                                 </div>
                             </td>
                         </tr>
@@ -410,6 +422,7 @@
     </div>
 
     <script>
+        // 🔑 Login handler
         function verifyAdminLogin(event) {
             event.preventDefault();
             const userBox = document.getElementById('username').value;
@@ -424,11 +437,19 @@
 
         function logoutAdmin() { location.reload(); }
 
+        // 🔄 Status Dropdown Change Handler
         function updateOrderStatus(selectElement) {
             const row = selectElement.closest('.order-row');
             const newStatus = selectElement.value;
+            
             row.setAttribute('data-status', newStatus);
-            selectElement.className = (newStatus === 'completed') ? "status-select completed" : "status-select pending";
+            
+            if(newStatus === 'completed') {
+                selectElement.className = "status-select completed";
+            } else {
+                selectElement.className = "status-select pending";
+            }
+
             recalculatePendingCount();
         }
 
@@ -437,6 +458,7 @@
             document.getElementById('pendingCounter').innerText = pendingRows;
         }
 
+        // 📊 Open/Close Modals
         function openScreenshotModal(imageUrl, orderId) {
             document.getElementById('modalOrderTitle').innerText = "Screenshot for Order " + orderId;
             document.getElementById('modalImageContainer').src = imageUrl;
@@ -446,6 +468,7 @@
         function openRevenueModal() { document.getElementById('revenueModal').classList.add('open'); }
         function closeModal(modalId) { document.getElementById(modalId).classList.remove('open'); }
 
+        // 🔍 Search and Filters Logic
         function filterOrdersBySearch() {
             const input = document.getElementById('adminSearchInput').value.toLowerCase();
             document.querySelectorAll('.order-row').forEach(row => {
@@ -461,52 +484,53 @@
             });
         }
 
+        // 🖨️ Printing Units (Single Address Card)
         function printAddressSlip(elemId, orderId) {
             const txt = document.getElementById(elemId).innerText;
             document.getElementById('printSection').innerHTML = `<h3>DWARAKA COLLECTIONS - COURIER SLIP</h3><br><b>ORDER: ${orderId}</b><br><br>${txt}`;
             window.print();
         }
 
-        // 🟢 EXPORT SMART SCRIPT LOGIC
-        function exportTableToExcel() {
-            let csvContent = "data:text/csv;charset=utf-8,";
-            
-            // Excel Headers
-            csvContent += "Order ID,Customer Name & Contact,Delivery Address,Status\r\n";
-            
-            // Get all order rows currently visible on screen
-            const rows = document.querySelectorAll('.order-row');
-            let hasData = false;
+        // 🚀 DYNAMIC EXCEL/CSV SHEET EXPORTER SYSTEM
+        function exportTableToCSV(filename) {
+            const csv = [];
+            // Define Clean Excel Sheet Headers
+            const headers = ["Order ID", "Customer Name", "Phone Number", "Delivery Address", "Status"];
+            csv.push(headers.join(","));
 
+            // Get all rows that are currently visible (filtered or searched)
+            const rows = document.querySelectorAll(".order-row");
+            
             rows.forEach(row => {
-                // Export only filtered or searched rows which are visible
+                // Only export if the row is visible to the user right now
                 if (row.style.display !== "none") {
-                    hasData = true;
-                    const id = row.querySelector('.col-id').innerText;
+                    const orderId = row.querySelector("td:nth-child(1)").innerText.trim();
+                    const name = row.querySelector(".cust-name").innerText.trim();
+                    const phone = row.querySelector(".cust-phone").innerText.trim();
                     
-                    // Clean strings to prevent CSV layout breaks
-                    const customer = row.querySelector('.col-cust').innerText.replace(/\n/g, " | ");
-                    const address = row.querySelector('.col-addr').innerText.replace(/,/g, " "); 
-                    const status = row.querySelector('.status-select').value.toUpperCase();
-                    
-                    csvContent += `"${id}","${customer}","${address}","${status}"\r\n`;
+                    // Clean commas from address so it doesn't break Excel column alignment
+                    let address = row.querySelector(".address-text").innerText.trim();
+                    address = `"${address.replace(/"/g, '""')}"`; 
+
+                    const statusSelect = row.querySelector(".status-select");
+                    const status = statusSelect.value.toUpperCase();
+
+                    const rowData = [orderId, name, phone, address, status];
+                    csv.push(rowData.join(","));
                 }
             });
 
-            if(!hasData) {
-                alert("No orders available to export!");
-                return;
-            }
-
-            // Create download anchor and trigger trigger save dialog
-            const encodedUri = encodeURI(csvContent);
+            // Trigger Automatic Download File Browser Action
+            const csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
             const downloadLink = document.createElement("a");
-            downloadLink.setAttribute("href", encodedUri);
-            downloadLink.setAttribute("download", "Dwaraka_Orders_Sheet.csv");
-            document.body.appendChild(downloadLink);
             
-            downloadLink.click(); // Trigger Download
-            document.body.removeChild(downloadLink); // Clean up
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
         }
     </script>
 </body>
