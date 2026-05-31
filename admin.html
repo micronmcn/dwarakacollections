@@ -57,46 +57,52 @@
         th { background-color: #fcf9f5; color: var(--dark-brown); padding: 15px; font-weight: 700; border-bottom: 2px solid var(--border-color); }
         td { padding: 15px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
         
-        /* 🚨 ఎడిటబుల్ ఇన్‌పుట్ స్టైల్స్ */
         .editable-select, .editable-input { padding: 6px; border-radius: 4px; border: 1px solid #ccc; font-size: 13px; font-weight: 600; outline: none; background-color: #fff; }
-        .editable-input { width: 75px; margin-top: 4px; }
+        .editable-input { width: 70px; margin-top: 4px; }
         .status-select.pending { background-color: #ffeaa7; color: #d63031; }
         .status-select.completed { background-color: #dff9fb; color: var(--success-green); }
 
+        /* 🖼️ Screenshot Style */
+        .ss-preview-btn { background: #e74c3c; color: white; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; }
+        
+        /* 🔔 Modals */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: all 0.3s ease; }
         .modal.open { opacity: 1; pointer-events: auto; }
         .modal-content { background: white; padding: 25px; border-radius: 10px; max-width: 650px; width: 90%; position: relative; max-height: 85vh; overflow-y: auto; }
         .close-modal { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; }
         .report-table { width: 100%; margin-top: 12px; border-collapse: collapse; }
         .report-table th, .report-table td { padding: 10px; border: 1px solid #ddd; font-size: 13px; }
-        #printSection { display: none; }
+        
+        /* 🖼️ Image Lightbox */
+        #imageLightbox { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; align-items:center; justify-content:center; z-index:10000; }
+        #lightboxImg { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 20px white; }
+
+        /* 🖨️ Print Media Styles */
+        @media print {
+            body * { visibility: hidden; }
+            #printInvoice, #printInvoice * { visibility: visible; }
+            #printInvoice { position: absolute; left: 0; top: 0; width: 100%; padding: 30px; color: #000; background: #fff; }
+        }
+        #printInvoice { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- 1. 🔒 LOGIN OVERLAY -->
+    <!-- 🔒 1. LOGIN OVERLAY -->
     <div id="loginOverlay">
         <div class="login-card">
             <div style="font-size: 40px; color: var(--dark-brown); margin-bottom: 10px;"><i class="fas fa-lock"></i></div>
             <h2>Dwaraka Admin Control</h2>
             <form onsubmit="verifyAdminLogin(event)">
-                <div class="login-field">
-                    <label>User ID</label>
-                    <input type="text" id="username" required placeholder="admin">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="login-field">
-                    <label>Password</label>
-                    <input type="password" id="password" required placeholder="dwaraka2026">
-                    <i class="fas fa-key"></i>
-                </div>
+                <div class="login-field"><label>User ID</label><input type="text" id="username" required placeholder="admin"><i class="fas fa-user"></i></div>
+                <div class="login-field"><label>Password</label><input type="password" id="password" required placeholder="dwaraka2026"><i class="fas fa-key"></i></div>
                 <button type="submit" class="login-btn">Secure Login</button>
                 <div class="error-msg" id="loginError">⚠️ తప్పుడు ఐడి లేదా పాస్‌వర్డ్!</div>
             </form>
         </div>
     </div>
 
-    <!-- 2. 📊 MAIN DASHBOARD -->
+    <!-- 📊 2. MAIN DASHBOARD -->
     <div id="mainDashboard">
         <div class="admin-header">
             <div class="header-title"><i class="fas fa-gavel"></i> Dwaraka Collections Control Room <span class="live-badge">Live Console</span></div>
@@ -104,20 +110,21 @@
         </div>
 
         <main class="dashboard-container">
-            <!-- Stats -->
+            <!-- Stats Cards -->
             <div class="analytics-grid">
                 <div class="analytics-card"><div class="card-info"><h3 id="totalOrdersCount">0</h3><p>Total Orders Received</p></div><div class="card-icon"><i class="fas fa-shopping-bag"></i></div></div>
                 <div class="analytics-card pending"><div class="card-info"><h3 id="pendingCounter">0</h3><p>Pending Dispatch</p></div><div class="card-icon"><i class="fas fa-clock"></i></div></div>
                 <div class="analytics-card earnings"><div class="card-info"><h3 id="grossTurnoverText">₹0</h3><p>Estimated Gross Value</p></div><div class="card-icon"><i class="fas fa-wallet"></i></div></div>
             </div>
 
-            <!-- Panel -->
+            <!-- Panel Controls -->
             <div class="controls-panel">
                 <div class="search-box"><i class="fas fa-search"></i><input type="text" id="adminSearchInput" onkeyup="filterOrdersBySearch()" placeholder="Search Name, Phone, Vendor..."></div>
                 <div class="action-buttons-group">
                     <button class="btn-action btn-revenue" onclick="openModal('revenueModal')"><i class="fas fa-wallet"></i> Revenue</button>
-                    <button class="btn-action btn-turnover" onclick="openModal('turnoverModal')"><i class="fas fa-coins"></i> Turnover Details</button>
-                    <button class="btn-action btn-vendor" onclick="openModal('vendorModal')"><i class="fas fa-handshake"></i> Vendor Directory</button>
+                    <button class="btn-action btn-turnover" onclick="openModal('turnoverModal')"><i class="fas fa-coins"></i> Turnover</button>
+                    <button class="btn-action btn-vendor" onclick="openModal('vendorModal')"><i class="fas fa-handshake"></i> Vendor Matrix</button>
+                    <button class="btn-action btn-export-sheet" onclick="exportTableToCSV('mainOrdersTable', 'Dwaraka_All_Orders.csv')"><i class="fas fa-file-excel"></i> Export Table</button>
                 </div>
                 <div class="filter-group">
                     <button class="filter-btn active" onclick="filterStatus('all', this)">All Orders</button>
@@ -126,37 +133,42 @@
                 </div>
             </div>
 
-            <!-- Table -->
+            <!-- Main Interactive Table -->
             <div class="table-responsive">
-                <table>
+                <table id="mainOrdersTable">
                     <thead>
                         <tr>
                             <th>Order ID</th>
                             <th>Customer Details</th>
                             <th>Vendor Details (Editable)</th>
-                            <th>Delivery Address</th>
+                            <th>Address & Screenshot</th>
                             <th>Current Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="ordersTableBody">
-                        <!-- Dynamic content rows populating here -->
+                        <!-- Loaded dynamically -->
                     </tbody>
                 </table>
             </div>
         </main>
     </div>
 
-    <!-- Modals (Revenue, Turnover, Vendor) -->
-    <div class="modal" id="revenueModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('revenueModal')">&times;</span><h3><i class="fas fa-wallet"></i> Revenue Overview</h3><table class="report-table"></table></div></div>
-    <div class="modal" id="turnoverModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('turnoverModal')">&times;</span><h3><i class="fas fa-coins"></i> Detailed Turnover Statements</h3><table class="report-table"><thead><tr><th>Timeline</th><th>Orders</th><th>Turnover</th></tr></thead><tbody></tbody></table></div></div>
-    <div class="modal" id="vendorModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('vendorModal')">&times;</span><h3><i class="fas fa-handshake"></i> Vendor Matrix</h3><table class="report-table"><thead><tr><th>Vendor</th><th>Items Sold</th><th>Cost Tally</th><th>Profit Margin</th></tr></thead><tbody></tbody></table></div></div>
-    <div id="printSection"></div>
+    <!-- 📥 MODALS -->
+    <div class="modal" id="revenueModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('revenueModal')">&times;</span><h3><i class="fas fa-wallet"></i> Revenue Overview</h3><button class="btn-action btn-export-sheet" style="margin-top:10px;" onclick="exportTableToCSV('revTable', 'Revenue_Report.csv')">Export CSV</button><table class="report-table" id="revTable"></table></div></div>
+    <div class="modal" id="turnoverModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('turnoverModal')">&times;</span><h3><i class="fas fa-coins"></i> Detailed Turnover Statements</h3><button class="btn-action btn-export-sheet" style="margin-top:10px;" onclick="exportTableToCSV('turnTable', 'Turnover_Report.csv')">Export CSV</button><table class="report-table" id="turnTable"><thead><tr><th>Timeline</th><th>Orders Filled</th><th>Gross Turnover</th></tr></thead><tbody></tbody></table></div></div>
+    <div class="modal" id="vendorModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('vendorModal')">&times;</span><h3><i class="fas fa-handshake"></i> Vendor Matrix</h3><button class="btn-action btn-export-sheet" style="margin-top:10px;" onclick="exportTableToCSV('venTable', 'Vendor_Report.csv')">Export CSV</button><table class="report-table" id="venTable"><thead><tr><th>Vendor Company</th><th>Total Items Sold</th><th>Reseller Cost Tally</th><th>Your Margin Profit</th></tr></thead><tbody></tbody></table></div></div>
+
+    <!-- 🖼️ LIGHTBOX OVERLAY FOR SCREENSHOTS -->
+    <div id="imageLightbox" onclick="this.style.display='none'"><img id="lightboxImg" src="" alt="Screenshot Reference"></div>
+
+    <!-- 🖨️ INVOICE PRINT ELEMENT -->
+    <div id="printInvoice"></div>
 
     <!-- SCRIPT ENGINE -->
     <script>
-        // ⚠️ ఇక్కడ నీ గూగుల్ యాప్స్ స్క్రిప్ట్ వెబ్ యాప్ URL ని పెట్టుకో మచ్చా!
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwAR9fSFRj-V0_O_HP2vs3mxToXzb2n9BE3kutms4EvuXyYxDnbYtuFaMUp3TBEu3ZI2g/exec";
+        // ⚠️ ఇక్కడ నీ వెబ్ యాప్ URL ని పేస్ట్ చెయ్ మచ్చా!
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyKPJGE5jc8RnEvWBO7HoW8qy_dGl1xe_WT0vNhaKIfQGpcl6ksMR03RFMRYPNFpomzSw/exec";
         let ORDERS_DATABASE = [];
 
         function verifyAdminLogin(event) {
@@ -165,35 +177,24 @@
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainDashboard').style.display = 'block';
                 fetchLiveOrders();
-            } else {
-                document.getElementById('loginError').style.display = 'block';
-            }
+            } else { document.getElementById('loginError').style.display = 'block'; }
         }
 
         function logoutAdmin() { location.reload(); }
 
-        // 🌐 గూగుల్ షీట్ నుండి రీడైరెక్ట్ ఎర్రర్ లేకుండా డేటా తెచ్చే పక్కా ఫంక్షన్
         function fetchLiveOrders() {
             const tableBody = document.getElementById('ordersTableBody');
             tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px;"><i class="fas fa-spinner fa-spin"></i> లైవ్ డేటా లోడ్ అవుతోంది మచ్చా...</td></tr>`;
 
-            // గూగుల్ మ్యాక్రోస్ రీడైరెక్ట్స్ ని హ్యాండిల్ చేయడానికి జస్ట్ నార్మల్ GET రిక్వెస్ట్
             fetch(WEB_APP_URL)
-            .then(res => {
-                if (!res.ok) throw new Error('Network response error');
-                return res.json();
-            })
-            .then(data => {
-                ORDERS_DATABASE = data;
-                renderDashboard();
-            })
+            .then(res => res.json())
+            .then(data => { ORDERS_DATABASE = data; renderDashboard(); })
             .catch(err => {
                 console.error(err);
-                tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red; font-weight:bold; padding:30px;"><i class="fas fa-exclamation-triangle"></i> డేటా కనెక్ట్ అవ్వలేదు! Apps Script లో 'Anyone' పర్మిషన్ ఇచ్చి కొత్తగా డిప్లాయ్ చేశావా?</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red; font-weight:bold; padding:30px;"><i class="fas fa-exclamation-triangle"></i> డేటా కనెక్ట్ అవ్వలేదు! URL కరెక్ట్ గా పెట్టావా?</td></tr>`;
             });
         }
 
-        // 🛠️ టేబుల్ బిల్డర్ & రియల్ టైమ్ స్టాట్స్ క్యాలిక్యులేటర్
         function renderDashboard() {
             const tableBody = document.getElementById('ordersTableBody');
             tableBody.innerHTML = "";
@@ -209,6 +210,7 @@
                 let phone = order["Phone"] || "";
                 let address = order["Address"] || "";
                 let message = order["Message"] || "";
+                let ssUrl = order["Screenshot URL"] || "";
                 let currentVendor = order["Vendor Name"] || "Kanchi Weavers";
                 let costPrice = Number(order["Cost Price"]) || 0;
                 let salePrice = Number(order["Sale Price"]) || 0;
@@ -217,15 +219,14 @@
                 grossTurnover += salePrice;
                 if (status === "pending") pendingCount++;
 
-                // వెండర్ గ్రూపింగ్
-                if (!vendorData[currentVendor]) {
-                    vendorData[currentVendor] = { items: 0, cost: 0, profit: 0 };
-                }
+                if (!vendorData[currentVendor]) { vendorData[currentVendor] = { items: 0, cost: 0, profit: 0 }; }
                 vendorData[currentVendor].items++;
                 vendorData[currentVendor].cost += costPrice;
                 vendorData[currentVendor].profit += (salePrice - costPrice);
 
-                // HTML Row
+                // Screenshot HTML Option 
+                let ssButtonHtml = ssUrl ? `<br><button class="ss-preview-btn" onclick="viewScreenshot('${ssUrl}')"><i class="fas fa-image"></i> View SS</button>` : `<br><span style="color:#aaa; font-size:11px;">No SS Uploaded</span>`;
+
                 const tr = document.createElement('tr');
                 tr.className = "order-row";
                 tr.setAttribute('data-status', status);
@@ -234,7 +235,6 @@
                     <td><strong>${orderId}</strong><br><span style="font-size:11px; color:#888;">${order["Timestamp"] || ''}</span></td>
                     <td><span style="font-weight:600; display:block;">${name}</span><span style="font-size:12px; color:#666;">${phone}</span></td>
                     <td>
-                        <!-- 🏢 మల్టిపుల్ వెండర్స్ చూజ్ ఆప్షన్ -->
                         <select class="editable-select vendor-select" style="color:var(--purple);">
                             <option value="Kanchi Weavers" ${currentVendor === 'Kanchi Weavers' ? 'selected' : ''}>Kanchi Weavers</option>
                             <option value="Dharmavaram Silk Co" ${currentVendor === 'Dharmavaram Silk Co' ? 'selected' : ''}>Dharmavaram Silk Co</option>
@@ -247,7 +247,7 @@
                             Sale: ₹<input type="number" class="editable-input sale-input" value="${salePrice}">
                         </span>
                     </td>
-                    <td><span style="font-size:13px; color:#444; display:block; max-width:220px;">${address}<br><i style="color:#999; font-size:11px;">"${message}"</i></span></td>
+                    <td><span style="font-size:13px; color:#444; display:block; max-width:220px;">${address}<br><i style="color:#999; font-size:11px;">"${message}"</i></span>${ssButtonHtml}</td>
                     <td>
                         <select class="editable-select status-select ${status}">
                             <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pending</option>
@@ -255,24 +255,89 @@
                         </select>
                     </td>
                     <td>
-                        <button class="btn-action" style="background:#27ae60; color:white; border:none;" onclick="saveRowChanges('${orderId}', this)">
-                            <i class="fas fa-save"></i> Save
-                        </button>
+                        <button class="btn-action" style="background:#27ae60; color:white; border:none; padding:6px 10px;" onclick="saveRowChanges('${orderId}', this)"><i class="fas fa-save"></i></button>
+                        <button class="btn-action" style="background:#2c3e50; color:white; border:none; padding:6px 10px;" onclick="printSingleOrder('${orderId}')"><i class="fas fa-print"></i></button>
                     </td>
                 `;
                 tableBody.appendChild(tr);
             });
 
-            // టాప్ కార్డ్స్ అప్‌డేట్
             document.getElementById('totalOrdersCount').innerText = totalOrders;
             document.getElementById('pendingCounter').innerText = pendingCount;
             document.getElementById('grossTurnoverText').innerText = "₹" + grossTurnover.toLocaleString('en-IN');
 
-            // మోడల్స్ అప్‌డేట్
             updateModalsData(grossTurnover, vendorData);
         }
 
-        // 💾 మార్చిన వెండర్ మరియు ప్రైస్ ని గూగుల్ షీట్ లోకి సేవ్ చేసే ఫంక్షన్
+        // 🖼️ Lightbox View ఫంక్షన్
+        function viewScreenshot(url) {
+            document.getElementById('lightboxImg').src = url;
+            document.getElementById('imageLightbox').style.display = 'flex';
+        }
+
+        // 🖨️ పర్టికులర్ ఆర్డర్ బిల్ ప్రింట్ ఫంక్షన్
+        function printSingleOrder(orderId) {
+            let order = ORDERS_DATABASE.find(o => o["Order ID"] === orderId);
+            if(!order) return;
+
+            let printArea = document.getElementById('printInvoice');
+            printArea.innerHTML = `
+                <div style="border:2px solid #4A2E1B; padding:20px; font-family:sans-serif;">
+                    <h2 style="text-align:center; color:#4A2E1B; margin-bottom:5px;">DWARAKA COLLECTIONS</h2>
+                    <p style="text-align:center; font-size:12px; margin-bottom:20px;">Order Invoice Sheet</p>
+                    <hr style="border:1px solid #4A2E1B;">
+                    <table style="width:100%; margin-top:15px; font-size:14px; line-height:2;">
+                        <tr><td><strong>Order ID:</strong></td><td>${order["Order ID"]}</td></tr>
+                        <tr><td><strong>Date:</strong></td><td>${order["Timestamp"] || ''}</td></tr>
+                        <tr><td><strong>Customer Name:</strong></td><td>${order["Customer Name"]}</td></tr>
+                        <tr><td><strong>Phone Number:</strong></td><td>${order["Phone"]}</td></tr>
+                        <tr><td><strong>Delivery Address:</strong></td><td>${order["Address"]}</td></tr>
+                        <tr><td><strong>Message Notes:</strong></td><td>${order["Message"] || 'None'}</td></tr>
+                        <tr><td><strong>Vendor Assigned:</strong></td><td>${order["Vendor Name"] || 'Kanchi Weavers'}</td></tr>
+                        <tr><td><strong>Total Sale Amount:</strong></td><td><strong>₹${order["Sale Price"] || '0'}</strong></td></tr>
+                        <tr><td><strong>Status:</strong></td><td>${order["Status"].toUpperCase()}</td></tr>
+                    </table>
+                    <br><br>
+                    <p style="text-align:center; font-size:12px; color:#555;">Thank you for managing with Dwaraka Console Room.</p>
+                </div>
+            `;
+            window.print();
+        }
+
+        // 📥 టేబుల్ ని CSV ఎక్సెల్ లాగా డౌన్‌లోడ్ చేసే ఫంక్షన్
+        function exportTableToCSV(tableId, filename) {
+            let table = document.getElementById(tableId);
+            let rows = table.querySelectorAll('tr');
+            let csv = [];
+            
+            for (let i = 0; i < rows.length; i++) {
+                let row = [], cols = rows[i].querySelectorAll('td, th');
+                for (let j = 0; j < cols.length; j++) {
+                    // ఇన్‌పుట్స్ లేదా సెలెక్ట్స్ ఉంటే వాటి వాల్యూస్ తీసుకుంటుంది
+                    let input = cols[j].querySelector('input');
+                    let select = cols[j].querySelector('select');
+                    let text = cols[j].innerText;
+                    
+                    if (select) text = select.options[select.selectedIndex].text;
+                    else if (input) text = input.value;
+                    
+                    // కామా ల వల్ల లైన్ పాడవకుండా డబుల్ కోట్స్ పెడతాం
+                    text = text.replace(/"/g, '""').replace(/\n/g, ' ');
+                    row.push('"' + text + '"');
+                }
+                csv.push(row.join(','));
+            }
+            
+            let csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+            let downloadLink = document.createElement('a');
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
         function saveRowChanges(orderId, btn) {
             const row = btn.closest('tr');
             const vendor = row.querySelector('.vendor-select').value;
@@ -283,70 +348,44 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             btn.disabled = true;
 
-            const postData = {
-                action: "updateOrder",
-                orderId: orderId,
-                vendor: vendor,
-                cost: cost,
-                sale: sale,
-                status: status
-            };
-
-            // గూగుల్ షీట్ కి పంపడం (CORS సేఫ్ గా)
             fetch(WEB_APP_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(postData)
+                body: JSON.stringify({ action: "updateOrder", orderId: orderId, vendor: vendor, cost: cost, sale: sale, status: status })
             })
             .then(() => {
-                alert('షీట్ లోకి డేటా సక్సెస్ ఫుల్ గా అప్‌డేట్ అయింది మచ్చా! 🎉');
-                // లోకల్ డేటాబేస్ ని మార్చి రీ-రెండర్ చేస్తాం
+                alert('షీట్ లోకి సేవ్ అయింది మచ్చా! 🎉');
                 let match = ORDERS_DATABASE.find(o => o["Order ID"] === orderId);
-                if(match) {
-                    match["Vendor Name"] = vendor;
-                    match["Cost Price"] = cost;
-                    match["Sale Price"] = sale;
-                    match["Status"] = status;
-                }
+                if(match) { Object.assign(match, { "Vendor Name": vendor, "Cost Price": cost, "Sale Price": sale, "Status": status }); }
                 renderDashboard();
             })
-            .catch(err => {
-                console.error(err);
-                alert('డేటా సేవ్ చేయడంలో ప్రాబ్లం వచ్చింది!');
-                btn.innerHTML = '<i class="fas fa-save"></i> Save';
-                btn.disabled = false;
-            });
+            .catch(err => { alert('Error saving data!'); console.error(err); renderDashboard(); });
         }
 
         function updateModalsData(gross, vendorData) {
-            // Revenue Update[span_1](start_span)[span_1](end_span)
             let completedSales = ORDERS_DATABASE.filter(o => (o["Status"]||'').toLowerCase() === 'completed').reduce((sum, o) => sum + (Number(o["Sale Price"])||0), 0);
-            document.getElementById('revenueModal').querySelector('.report-table').innerHTML = `
+            document.getElementById('revTable').innerHTML = `
                 <tr><td><strong>Total Gross Orders Value:</strong></td><td>₹${gross}</td></tr>
                 <tr><td><strong>Dispatched Orders Net Revenue:</strong></td><td>₹${completedSales}</td></tr>
                 <tr><td><strong>Pending Pipeline Income:</strong></td><td>₹${gross - completedSales}</td></tr>
             `;
 
-            // Vendor Matrix Update[span_2](start_span)[span_2](end_span)
-            let vBody = document.getElementById('vendorModal').querySelector('.report-table tbody');
+            let vBody = document.getElementById('venTable').querySelector('tbody');
             vBody.innerHTML = "";
             for(let v in vendorData) {
                 vBody.innerHTML += `<tr><td><strong>${v}</strong></td><td>${vendorData[v].items}</td><td>₹${vendorData[v].cost}</td><td><span style="color:green; font-weight:bold;">+₹${vendorData[v].profit}</span></td></tr>`;
             }
 
-            // Turnover Update[span_3](start_span)[span_3](end_span)
-            document.getElementById('turnoverModal').querySelector('.report-table tbody').innerHTML = `<tr><td><strong>Live Data Statement</strong></td><td>${ORDERS_DATABASE.length}</td><td>₹${gross}</td></tr>`;
+            document.getElementById('turnTable').querySelector('tbody').innerHTML = `<tr><td><strong>Live Data Statement</strong></td><td>${ORDERS_DATABASE.length}</td><td>₹${gross}</td></tr>`;
         }
 
         function openModal(id) { document.getElementById(id).classList.add('open'); }
         function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-        
         function filterOrdersBySearch() {
             const val = document.getElementById('adminSearchInput').value.toLowerCase();
             document.querySelectorAll('.order-row').forEach(r => r.style.display = r.innerText.toLowerCase().includes(val) ? "" : "none");
         }
-
         function filterStatus(status, btn) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
