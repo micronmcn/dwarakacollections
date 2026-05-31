@@ -21,6 +21,7 @@
             --soft-cream: #FDFBF7;
             --text-dark: #333333;
             --border-color: #E6DFD7;
+            --success-green: #27ae60;
         }
 
         body {
@@ -147,10 +148,19 @@
             transition: background 0.2s;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
 
         .send-btn:hover {
             background-color: var(--light-brown);
+        }
+
+        .send-btn:disabled {
+            background-color: #a29bfe;
+            cursor: not-allowed;
         }
 
         /* Info Side Styling */
@@ -235,7 +245,7 @@
             transform: translateY(-3px);
         }
 
-        /* Full Footer Component (Same as Home Page) */
+        /* Full Footer Component */
         footer {
             background-color: var(--dark-brown);
             color: #E6DFD7;
@@ -302,20 +312,22 @@
                 <h1 class="contact-heading">Get In Touch</h1>
                 <p class="contact-subtext">Have any questions about our handloom products, custom sizing, or bulk ordering? Drop us a message and we will respond as swiftly as possible!</p>
                 
-                <form class="contact-form" onsubmit="handleEnquirySubmit(event)">
+                <form class="contact-form" id="dwarakaContactForm" onsubmit="handleEnquirySubmit(event)">
                     <div class="form-group">
                         <label>Your Name *</label>
-                        <input type="text" required placeholder="Enter your full name">
+                        <input type="text" id="custName" required placeholder="Enter your full name">
                     </div>
                     <div class="form-group">
                         <label>Email Address / Phone Number *</label>
-                        <input type="text" required placeholder="Enter your contact info">
+                        <input type="text" id="custContact" required placeholder="Enter your contact info">
                     </div>
                     <div class="form-group">
                         <label>Your Message *</label>
-                        <textarea rows="4" required placeholder="Type your query or custom orders details here..."></textarea>
+                        <textarea id="custMessage" rows="4" required placeholder="Type your query or custom orders details here..."></textarea>
                     </div>
-                    <button type="submit" class="send-btn">Send Message</button>
+                    <button type="submit" class="send-btn" id="submitBtn">
+                        <span id="btnText">Send Message</span>
+                    </button>
                 </form>
             </div>
 
@@ -390,11 +402,50 @@
     </footer>
 
     <script>
+        // ⚠️ క్రూషియల్: నీ గూగుల్ వెబ్ యాప్ URL ని ఇక్కడ కింద ఉన్న కొటేషన్స్ మధ్యలో పేస్ట్ చెయ్!
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxpZssBJhyx-FOM9Q-bVjlUBD1A3mf7Iut6yaSHO-cp7gnGBOPqmMqSgzeLFHyXfrjXBw/exec";
+
         function handleEnquirySubmit(event) {
             event.preventDefault();
-            alert('ధన్యవాదాలు! మీ మెసేజ్ మాకు అందింది. మా టీమ్ మిమ్మల్ని త్వరలోనే కాంటాక్ట్ చేస్తుంది. 👍');
-            event.target.reset();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            
+            // బటన్ ని లోడింగ్ మోడ్ లోకి మారుస్తున్నాం
+            submitBtn.disabled = true;
+            btnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> పంపుతున్నాము...';
+
+            // ఇన్పుట్ డేటాను ఆబ్జెక్ట్ లోకి తీసుకుంటున్నాం
+            const formData = {
+                name: document.getElementById('custName').value,
+                contact: document.getElementById('custContact').value,
+                message: document.getElementById('custMessage').value
+            };
+
+            // ఫైరింగ్ బ్యాకెండ్ రిక్వెస్ట్ (Fetch API)
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Apps script CORS ఇష్యూ రాకుండా సేఫ్ మోడ్
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                // సక్సెస్ అలర్ట్
+                alert('ధన్యవాదాలు మచ్చా! మీ మెసేజ్ గూగుల్ షీట్ లోకి సేవ్ అయింది. మా టీమ్ మిమ్మల్ని త్వరలోనే కాంటాక్ట్ చేస్తుంది. 👍');
+                
+                // ఫామ్ రీసెట్ మరియు రీస్టోర్ బటన్
+                document.getElementById('dwarakaContactForm').reset();
+                submitBtn.disabled = false;
+                btnText.innerText = 'Send Message';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('అయ్యో! డేటా సేవ్ చేయడంలో ఏదో చిన్న ప్రాబ్లం వచ్చింది. మళ్ళీ ట్రై చెయ్ మచ్చా!');
+                submitBtn.disabled = false;
+                btnText.innerText = 'Send Message';
+            });
         }
     </script>
 </body>
-  </html>
+</html>
