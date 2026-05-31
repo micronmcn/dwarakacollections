@@ -798,5 +798,100 @@
             }
         }
     </script>
+    <script>
+    // ⚠️ ఇక్కడ నీ Apps Script Web App URL ని పేస్ట్ చెయ్
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyTPrkvyCbT77TJLq0niehKlmE0csFqDoJvBCBjXBAvENwhzCK2X_v5_7Qh7UzVF5RvkQ/exec";
+
+    function openSideMenu() {
+        document.getElementById('sideMenu').classList.add('open');
+        document.getElementById('menuOverlay').style.display = 'block';
+    }
+
+    function closeSideMenu() {
+        document.getElementById('sideMenu').classList.remove('open');
+        document.getElementById('menuOverlay').style.display = 'none';
+    }
+
+    function scrollToSection(id) {
+        closeSideMenu();
+        const element = document.getElementById(id);
+        if(element) { element.scrollIntoView({ behavior: 'smooth' }); }
+    }
+
+    function openOrderModal() { document.getElementById('orderModal').classList.remove('hidden'); }
+    function closeOrderModal() { 
+        document.getElementById('orderModal').classList.add('hidden'); 
+        document.getElementById('orderForm').reset();
+    }
+
+    // కస్టమర్ ఆర్డర్ సబ్మిట్ చేసినప్పుడు రన్ అయ్యే ఫంక్షన్
+    function handleOrderSubmit(e) {
+        e.preventDefault();
+        
+        const submitBtn = e.target.querySelector('.submit-btn');
+        const oldText = submitBtn.innerText;
+        submitBtn.disabled = true;
+        submitBtn.innerText = "పంపుతున్నాము...⏳";
+
+        const formData = {
+            action: "addOrder",
+            name: e.target.querySelector('input[placeholder="మీ పేరు"]').value,
+            phone: e.target.querySelector('input[placeholder="91XXXXXXXX"]').value,
+            address: e.target.querySelector('textarea[placeholder="మీ పూర్తి అడ్రస్ ఇక్కడ రాయండి..."]').value,
+            message: e.target.querySelector('textarea[placeholder="ఏదైనా అదనపు సమాచారం..."]').value
+        };
+
+        fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+        .then(() => {
+            document.getElementById('orderModal').classList.add('hidden'); 
+            document.getElementById('feedbackModal').classList.remove('hidden'); 
+            submitBtn.disabled = false;
+            submitBtn.innerText = oldText;
+        })
+        .catch(err => {
+            console.error(err);
+            alert("ఆర్డర్ సబ్మిట్ చేయడంలో ప్రాబ్లం వచ్చింది మచ్చా!");
+            submitBtn.disabled = false;
+            submitBtn.innerText = oldText;
+        });
+    }
+
+    function handleFeedbackSubmit(e) {
+        e.preventDefault();
+        alert('మీ ఆర్డర్ మరియు ఫీడ్‌బ్యాక్ విజయవంతంగా సబ్మిట్ చేయబడింది! ధన్యవాదాలు. ❤️');
+        document.getElementById('feedbackModal').classList.add('hidden'); 
+        document.getElementById('orderForm').reset();
+        document.getElementById('feedbackForm').reset();
+    }
+
+    function openLoginModal() { closeSideMenu(); document.getElementById('loginModal').classList.remove('hidden'); }
+    function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
+
+    function handleAdminLogin(e) {
+        e.preventDefault();
+        const user = document.getElementById('adminUser').value;
+        const pass = document.getElementById('adminPass').value;
+        
+        if(user === 'admin' && pass === 'dwaraka2026') {
+            window.location.href = 'admin.html'; // పక్కాగా admin.html పేజీ కి వెళ్తుంది
+        } else {
+            alert('తప్పుడు యూజర్ ఐడి లేదా పాస్‌వర్డ్!');
+        }
+    }
+
+    function toggleFaq(element) {
+        const answer = element.nextElementSibling;
+        answer.classList.toggle('hidden');
+        const icon = element.querySelector('span');
+        icon.innerText = answer.classList.contains('hidden') ? '+' : '-';
+    }
+    </script>
+    
 </body>
 </html>
