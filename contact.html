@@ -413,7 +413,7 @@
             
             // బటన్ ని లోడింగ్ మోడ్ లోకి మారుస్తున్నాం
             submitBtn.disabled = true;
-            btnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> పంపుతున్నాము...';
+            btnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
             // ఇన్పుట్ డేటాను ఆబ్జెక్ట్ లోకి తీసుకుంటున్నాం
             const formData = {
@@ -432,7 +432,7 @@
             })
             .then(response => {
                 // సక్సెస్ అలర్ట్
-                alert('ధన్యవాదాలు మచ్చా! మీ మెసేజ్ గూగుల్ షీట్ లోకి సేవ్ అయింది. మా టీమ్ మిమ్మల్ని త్వరలోనే కాంటాక్ట్ చేస్తుంది. 👍');
+                alert('Thank You Dear Customer! Your Message Request Received Successfully.Our team will contact you soon. 👍');
                 
                 // ఫామ్ రీసెట్ మరియు రీస్టోర్ బటన్
                 document.getElementById('dwarakaContactForm').reset();
@@ -441,7 +441,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('అయ్యో! డేటా సేవ్ చేయడంలో ఏదో చిన్న ప్రాబ్లం వచ్చింది. మళ్ళీ ట్రై చెయ్ మచ్చా!');
+                alert('Oops! There was a small problem saving the data. Please try again.!');
                 submitBtn.disabled = false;
                 btnText.innerText = 'Send Message';
             });
