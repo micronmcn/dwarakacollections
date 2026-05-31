@@ -618,5 +618,235 @@
             document.body.removeChild(downloadLink);
         }
     </script>
+    <script>
+    // ⚠️ ఇక్కడ కూడా నీ Apps Script Web App URL ని పేస్ట్ చెయ్
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyTPrkvyCbT77TJLq0niehKlmE0csFqDoJvBCBjXBAvENwhzCK2X_v5_7Qh7UzVF5RvkQ/exec";
+    let ORDERS_DATABASE = []; // గూగుల్ షీట్ నుండి వచ్చే డేటా ఇక్కడ సేవ్ అవుతుంది
+
+    // 🔒 Security Portal Verification
+    function verifyAdminLogin(event) {
+        event.preventDefault();
+        const userBox = document.getElementById('username').value;
+        const passBox = document.getElementById('password').value;
+        if (userBox === 'admin' && passBox === 'dwaraka2026') {
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('mainDashboard').style.display = 'block';
+            fetchLiveOrders(); // లాగిన్ అవ్వగానే డేటా లోడ్ అవుతుంది
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    }
+
+    function logoutAdmin() { location.reload(); }
+
+    // 🌐 గూగుల్ షీట్ నుండి లైవ్ ఆర్డర్స్ ని లాక్కోవడం (Fetch)
+    function fetchLiveOrders() {
+        const tableBody = document.getElementById('ordersTableBody');
+        tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px;"><i class="fas fa-spinner fa-spin"></i> గూగుల్ షీట్ నుండి లైవ్ డేటా లోడ్ అవుతోంది...</td></tr>`;
+
+        fetch(WEB_APP_URL)
+        .then(res => res.json())
+        .then(data => {
+            ORDERS_DATABASE = data;
+            renderDashboard(); // స్క్రీన్ మీద డేటా బిల్డ్ చేయడం
+        })
+        .catch(err => {
+            console.error(err);
+            tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding:30px;">డేటా లోడ్ అవ్వలేదు మచ్చా! URL చెక్ చెయ్.</td></tr>`;
+        });
+    }
+
+    // 📊 రియల్-టైమ్ మ్యాథ్స్ & టేబుల్స్ బిల్డింగ్ ఇంజన్
+    function renderDashboard() {
+        const tableBody = document.getElementById('ordersTableBody');
+        tableBody.innerHTML = "";
+
+        let totalOrders = ORDERS_DATABASE.length;
+        let pendingCount = 0;
+        let grossTurnover = 0;
+
+        let vendorData = {}; // వెండర్ల క్యాలిక్యులేషన్ కోసం
+
+        ORDERS_DATABASE.forEach(order => {
+            // టోటల్స్ క్యాలిక్యులేషన్
+            let salePrice = Number(order["Sale Price"]) || 0;
+            let costPrice = Number(order["Cost Price"]) || 0;
+            let status = order["Status"] ? order["Status"].toLowerCase() : "pending";
+            let vendor = order["Product/Vendor"] || "Unknown";
+
+            grossTurnover += salePrice;
+            if(status === "pending") pendingCount++;
+
+            // వెండర్ వైజ్ గ్రూపింగ్ లాజిక్
+            if (!vendorData[vendor]) {
+                vendorData[vendor] = { items: 0, cost: 0, profit: 0 };
+            }
+            vendorData[vendor].items++;
+            vendorData[vendor].cost += costPrice;
+            vendorData[vendor].profit += (salePrice - costPrice);
+
+            // UI రో (Row) జనరేషన్
+            const tr = document.createElement('tr');
+            tr.className = "order-row";
+            tr.setAttribute('data-status', status);
+            tr.setAttribute('data-date', order["Timestamp"]);
+
+            tr.innerHTML = `
+                <td><strong>${order["Order ID"]}</strong><br><span style="font-size:10px; color:#888;">${order["Timestamp"]}</span></td>
+                <td>
+                    <span class="cust-name" style="font-weight: 600; display:block;">${order["Customer Name"]}</span>
+                    <span class="cust-phone" style="font-size: 12px; color: #666;">${order["Phone"]}</span>
+                </td>
+                <td>
+                    <input type="text" value="${vendor}" class="vendor-input" style="width:110px; font-weight:600; color:var(--purple); border:1px solid #ddd; padding:2px 5px; border-radius:4px;"><br>
+                    <span style="font-size:11px; color:#777;">
+                        C: <input type="number" value="${costPrice}" class="cost-input" style="width:50px; border:1px solid #ddd;"> 
+                        S: <input type="number" value="${salePrice}" class="sale-input" style="width:50px; border:1px solid #ddd;">
+                    </span>
+                </td>
+                <td><span class="address-text" id="addr_${order["Order ID"].replace('#','')}">${order["Address"]}<br><i style="color:#888; font-size:12px;">"${order["Message"] || ''}"</i></span></td>
+                <td>
+                    <button class="btn-action" onclick="alert('Screenshot functionality connected. (Path inside Sheet)')">
+                        <i class="fas fa-image"></i> View Pic
+                    </button>
+                </td>
+                <td>
+                    <select class="status-select ${status}" onchange="this.className='status-select '+this.value">
+                        <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="completed" ${status === 'completed' ? 'selected' : ''}>Completed</option>
+                    </select>
+                </td>
+                <td>
+                    <div style="display: flex; gap: 5px;">
+                        <button class="btn-action" onclick="saveOrderRowChanges('${order["Order ID"]}', this)"><i class="fas fa-save" style="color:green;"></i> Save</button>
+                        <button class="btn-action" onclick="printAddressSlip('addr_${order["Order ID"].replace('#','')}', '${order["Order ID"]}')"><i class="fas fa-print"></i></button>
+                    </div>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+
+        // 📊 Top Analytics Cards ని అప్‌డేట్ చేయడం
+        document.querySelector(".analytics-grid .analytics-card:nth-child(1) h3").innerText = totalOrders;
+        document.getElementById('pendingCounter').innerText = pendingCount;
+        document.querySelector(".analytics-grid .analytics-card.earnings h3").innerText = "₹" + grossTurnover.toLocaleString('en-IN');
+
+        // 💰 Revenue Modal ని అప్‌డేట్ చేయడం
+        let dispatchedRevenue = ORDERS_DATABASE.filter(o => o["Status"].toLowerCase() === 'completed').reduce((sum, o) => sum + (Number(o["Sale Price"]) || 0), 0);
+        let pendingPipeline = grossTurnover - dispatchedRevenue;
+        document.getElementById('revenueModal').querySelector('.report-table').innerHTML = `
+            <tr><td><strong>Total Gross Orders Value:</strong></td><td>₹${grossTurnover}</td></tr>
+            <tr><td><strong>Dispatched Orders Net Revenue:</strong></td><td>₹${dispatchedRevenue}</td></tr>
+            <tr><td><strong>Pending Pipeline Income:</strong></td><td>₹${pendingPipeline}</td></tr>
+        `;
+
+        // 🏢 Vendor Directory Modal ని అప్‌డేట్ చేయడం
+        let vendorTableBody = document.getElementById('vendorModal').querySelector('.report-table tbody');
+        vendorTableBody.innerHTML = "";
+        for (let v in vendorData) {
+            vendorTableBody.innerHTML += `
+                <tr>
+                    <td><strong>${v}</strong></td>
+                    <td>${vendorData[v].items} Items</td>
+                    <td>₹${vendorData[v].cost}</td>
+                    <td><span style="color:var(--success-green); font-weight:600;">+₹${vendorData[v].profit}</span></td>
+                </tr>
+            `;
+        }
+
+        // 📅 Turnover Modal ని అప్‌డేట్ చేయడం
+        document.getElementById('turnoverModal').querySelector('.report-table tbody').innerHTML = `
+            <tr><td><strong>Total Active Accumulation</strong></td><td>${totalOrders}</td><td>₹${grossTurnover}</td></tr>
+        `;
+    }
+
+    // 💾 అడ్మిన్ మార్చిన మార్పులను గూగుల్ షీట్ లోకి సేవ్ చేయడం
+    function saveOrderRowChanges(orderId, btnElement) {
+        const row = btnElement.closest('tr');
+        const vendor = row.querySelector('.vendor-input').value;
+        const cost = row.querySelector('.cost-input').value;
+        const sale = row.querySelector('.sale-input').value;
+        const status = row.querySelector('.status-select').value;
+
+        btnElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        btnElement.disabled = true;
+
+        const updateData = {
+            action: "updateOrder",
+            orderId: orderId,
+            vendor: vendor,
+            cost: cost,
+            sale: sale,
+            status: status
+        };
+
+        fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(updateData)
+        })
+        .then(() => {
+            alert('షీట్ లోకి వివరాలు అప్‌డేట్ అయ్యాయి మచ్చా! 👍');
+            btnElement.innerHTML = '<i class="fas fa-save" style="color:green;"></i> Save';
+            btnElement.disabled = false;
+            // లోకల్ డేటాబేస్ ని కూడా అప్‌డేట్ చేసి రీ-ఫ్రెష్ చేస్తున్నాం
+            let target = ORDERS_DATABASE.find(o => o["Order ID"] === orderId);
+            if(target) {
+                target["Product/Vendor"] = vendor;
+                target["Cost Price"] = cost;
+                target["Sale Price"] = sale;
+                target["Status"] = status;
+            }
+            renderDashboard();
+        })
+        .catch(err => {
+            console.error(err);
+            alert('సేవ్ చేయడంలో లోపం వచ్చింది!');
+            btnElement.innerHTML = '<i class="fas fa-save" style="color:green;"></i> Save';
+            btnElement.disabled = false;
+        });
+    }
+
+    // 📅 Custom Date Turnover Calculator
+    function calculateCustomTurnover() {
+        const start = document.getElementById('startDatePicker').value;
+        const end = document.getElementById('endDatePicker').value;
+        
+        if(!start || !end) return alert("దయచేసి రెండు డేట్స్ సెలెక్ట్ చెయ్ మచ్చా!");
+
+        let filtered = ORDERS_DATABASE.filter(o => o["Timestamp"] >= start && o["Timestamp"] <= end);
+        let total = filtered.reduce((sum, o) => sum + (Number(o["Sale Price"]) || 0), 0);
+
+        document.getElementById('customResultView').style.display = "block";
+        document.getElementById('customResultView').innerHTML = `<i class="fas fa-check-circle"></i> Result: Chosen range turnover value holds ₹${total} across ${filtered.length} sales transactions.`;
+    }
+
+    // 📊 Modal Dynamic Utility Methods
+    function openModal(modalId) { document.getElementById(modalId).classList.add('open'); }
+    function closeModal(modalId) { document.getElementById(modalId).classList.remove('open'); }
+
+    // 🔍 Universal Live Filter Interface Logic
+    function filterOrdersBySearch() {
+        const input = document.getElementById('adminSearchInput').value.toLowerCase();
+        document.querySelectorAll('.order-row').forEach(row => {
+            row.style.display = row.innerText.toLowerCase().includes(input) ? "" : "none";
+        });
+    }
+
+    function filterStatus(status, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.order-row').forEach(row => {
+            row.style.display = (status === 'all' || row.getAttribute('data-status') === status) ? "" : "none";
+        });
+    }
+
+    function printAddressSlip(elemId, orderId) {
+        const txt = document.getElementById(elemId).innerText;
+        document.getElementById('printSection').innerHTML = `<h3>DWARAKA COLLECTIONS - COURIER SLIP</h3><br><b>ORDER: ${orderId}</b><br><br>${txt}`;
+        window.print();
+    }
+    </script>
+    
 </body>
 </html>
